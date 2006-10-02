@@ -1,0 +1,382 @@
+# translation of knxccnetwork.po to
+# Copyright (C) 2006
+# This file is distributed under the same license as the knxcc package.
+#
+# Andreas Loibl <andreas@andreas-loibl.de>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: knxccnetwork\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-11 19:15+0200\n"
+"PO-Revision-Date: 2006-09-11 19:53+0200\n"
+"Last-Translator: Andreas Loibl <andreas@andreas-loibl.de>\n"
+"Language-Team:  <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+
+#: knxcc_network_interface.cpp:97
+msgid ""
+"<b>%1</b> (%2, %3) uses driver: %4, MAC-address: %5\n"
+"<br><b>Interface description</b>: %6"
+msgstr ""
+"<b>%1</b> (%2, %3) Treiber: %4, MAC-Adresse: %5\n"
+"<br><b>Beschreibung</b>: %6"
+
+#: knxcc_network_interface.cpp:285
+msgid "WPA-key length error"
+msgstr "Fehlerhafte Länge des WPA-Keys"
+
+#: knxcc_network_interface.cpp:285
+msgid ""
+"Your WPA-key has to be at least 8 characters long.\n"
+"Do you want to correct your input?\n"
+"\n"
+"(if not WPA-encryption will be disabled)"
+msgstr ""
+"Ihr WPA-Key muss mindestens 8 Zeichen lang sein.\n"
+"Wollen Sie ihre Eingabe korrigieren?\n"
+"\n"
+"(falls nicht wird die WPA-Verschlüsselung deaktiviert)"
+
+#: rc.cpp:3 rc.cpp:221
+#, no-c-format
+msgid "Interface"
+msgstr "Interface"
+
+#: rc.cpp:6 rc.cpp:224
+#, no-c-format
+msgid "Interface details"
+msgstr "Interface-Details"
+
+#: rc.cpp:10 rc.cpp:228
+#, no-c-format
+msgid "In&terface"
+msgstr "In&terface"
+
+#: rc.cpp:13 rc.cpp:231
+#, no-c-format
+msgid "a&uto enable this interface on boot"
+msgstr "Dieses Interface beim Booten automatisch aktivieren"
+
+#: rc.cpp:16 rc.cpp:107 rc.cpp:165 rc.cpp:234 rc.cpp:325 rc.cpp:383
+#, no-c-format
+msgid "Alt+U"
+msgstr "Alt+U"
+
+#: rc.cpp:19 rc.cpp:237
+#, no-c-format
+msgid ""
+"<b>allow-hotplug</b>: this option is useful together with\n"
+"<b>ifplugd</b>, which is a daemon that automatically configures your "
+"ethernet device when a cable is plugged in and automatically unconfigures it "
+"if the cable is pulled. This is useful on laptops with onboard network "
+"adapters, since it will only configure the interface when a cable is really "
+"connected."
+msgstr ""
+"<b>allow-hotplug</b>: Diese Option ist sinnvoll zusammen mit\n"
+"<b>ifplugd</b>, einem Daemon der ihr Netzwerkgerät automatisch "
+"konfiguriert wenn ein Kabel eingesteckt wurde und automatisch deaktiviert "
+"wenn das Kabel gezogen wird. Dies ist nützlich auf Laptops mit einer "
+"Onboard-Netzwerkkarte, welche nur dann aktiviert wird wenn wirklich "
+"ein Kabel angeschlossen ist."
+
+#: rc.cpp:23 rc.cpp:241
+#, no-c-format
+msgid "enable \"allow-hotplu&g\" for this interface"
+msgstr "\"allow-hotplu&g\" für dieses Interface aktivieren"
+
+#: rc.cpp:26 rc.cpp:244
+#, no-c-format
+msgid "Alt+G"
+msgstr "Alt+G"
+
+#: rc.cpp:29 rc.cpp:247
+#, no-c-format
+msgid "&IP address"
+msgstr "&IP-Adresse"
+
+#: rc.cpp:32 rc.cpp:250
+#, no-c-format
+msgid "IP-Configuration"
+msgstr "IP-Einstellungen"
+
+#: rc.cpp:35 rc.cpp:253
+#, no-c-format
+msgid "DH&CP"
+msgstr "DH&CP"
+
+#: rc.cpp:38 rc.cpp:113 rc.cpp:172 rc.cpp:256 rc.cpp:331 rc.cpp:390
+#, no-c-format
+msgid "Alt+C"
+msgstr "Alt+C"
+
+#: rc.cpp:41 rc.cpp:259
+#, no-c-format
+msgid "&Static IP"
+msgstr "&Statische IP"
+
+#: rc.cpp:44 rc.cpp:262
+#, no-c-format
+msgid "Alt+S"
+msgstr "Alt+S"
+
+#: rc.cpp:47 rc.cpp:265
+#, no-c-format
+msgid "Network Mask:"
+msgstr "Netzwerkmaske:"
+
+#: rc.cpp:50 rc.cpp:268
+#, no-c-format
+msgid "Broadcast Address:"
+msgstr "Broadcast Adresse:"
+
+#: rc.cpp:53 rc.cpp:271
+#, no-c-format
+msgid "Default Gateway:"
+msgstr "Standardgateway:"
+
+#: rc.cpp:56 rc.cpp:59 rc.cpp:62 rc.cpp:65 rc.cpp:274 rc.cpp:277 rc.cpp:280
+#: rc.cpp:283
+#, no-c-format
+msgid "000.000.000.000; "
+msgstr "000.000.000.000; "
+
+#: rc.cpp:68 rc.cpp:286
+#, no-c-format
+msgid "IP Address:"
+msgstr "IP-Adresse:"
+
+#: rc.cpp:71 rc.cpp:289
+#, no-c-format
+msgid "&WLAN settings"
+msgstr "WLAN-Einstellungen"
+
+#: rc.cpp:74 rc.cpp:292
+#, no-c-format
+msgid "ESSID:"
+msgstr "ESSID:"
+
+#: rc.cpp:77 rc.cpp:295
+#, no-c-format
+msgid "(unconfigured)"
+msgstr "(unkonfiguriert)"
+
+#: rc.cpp:80 rc.cpp:298
+#, no-c-format
+msgid "Managed"
+msgstr "Infrastruktur"
+
+#: rc.cpp:83 rc.cpp:301
+#, no-c-format
+msgid "Ad-Hoc"
+msgstr "Ad-Hoc"
+
+#: rc.cpp:86 rc.cpp:304
+#, no-c-format
+msgid "Master"
+msgstr "Master"
+
+#: rc.cpp:89 rc.cpp:307
+#, no-c-format
+msgid "Repeater"
+msgstr "Repeater"
+
+#: rc.cpp:92 rc.cpp:310
+#, no-c-format
+msgid "Secondary"
+msgstr "Secondary"
+
+#: rc.cpp:95 rc.cpp:313
+#, no-c-format
+msgid "Auto"
+msgstr "Auto"
+
+#: rc.cpp:98 rc.cpp:316
+#, no-c-format
+msgid "Mode:"
+msgstr "Modus:"
+
+#: rc.cpp:101 rc.cpp:319
+#, no-c-format
+msgid "Channel/ Frequency"
+msgstr "Kanal/ Frequenz"
+
+#: rc.cpp:104 rc.cpp:322
+#, no-c-format
+msgid "A&uto"
+msgstr "A&uto"
+
+#: rc.cpp:110 rc.cpp:328
+#, no-c-format
+msgid "&Channel:"
+msgstr "Kanal:"
+
+#: rc.cpp:116 rc.cpp:334
+#, no-c-format
+msgid "Fre&quency:"
+msgstr "Fre&quenz:"
+
+#: rc.cpp:119 rc.cpp:337
+#, no-c-format
+msgid "Alt+Q"
+msgstr "Alt+Q"
+
+#: rc.cpp:122 rc.cpp:340
+#, no-c-format
+msgid ".G"
+msgstr ".G"
+
+#: rc.cpp:125 rc.cpp:343
+#, no-c-format
+msgid "9.999G;_"
+msgstr "9.999G;_"
+
+#: rc.cpp:128 rc.cpp:346
+#, no-c-format
+msgid "Advanced options"
+msgstr "Erweiterte Optionen"
+
+#: rc.cpp:131 rc.cpp:349
+#, no-c-format
+msgid "NWID:"
+msgstr "NWID:"
+
+#: rc.cpp:134 rc.cpp:352
+#, no-c-format
+msgid "iwspy-options:"
+msgstr "iwspy-Optionen:"
+
+#: rc.cpp:137 rc.cpp:355
+#, no-c-format
+msgid "iwconfig-options:"
+msgstr "iwconfig-Optionen:"
+
+#: rc.cpp:140 rc.cpp:358
+#, no-c-format
+msgid "iwpriv-options:"
+msgstr "iwpriv-Optionen:"
+
+#: rc.cpp:143 rc.cpp:361
+#, no-c-format
+msgid "WLAN &security"
+msgstr "WLAN-Sicherheit"
+
+#: rc.cpp:146 rc.cpp:364
+#, no-c-format
+msgid "E&nable wireless encryption"
+msgstr "Verschlüsselung &aktivieren"
+
+#: rc.cpp:149 rc.cpp:367
+#, no-c-format
+msgid "Alt+N"
+msgstr "Alt+A"
+
+#: rc.cpp:153 rc.cpp:371
+#, no-c-format
+msgid "pri&vate"
+msgstr "&nicht öffentlich"
+
+#: rc.cpp:156 rc.cpp:374
+#, no-c-format
+msgid "Alt+V"
+msgstr "Alt+N"
+
+#: rc.cpp:159 rc.cpp:377
+#, no-c-format
+msgid ""
+"Would you like to store your wireless encryption key in it's own <b>private</"
+"b> file (/etc/network/wep.*; chmod 700)? If you don't, your key will be "
+"stored in /etc/network/interfaces and will be readable by any account on "
+"your system. So you may want to 'chmod 700 /etc/network/interfaces' if you "
+"select the <b>public</b> method..."
+msgstr "Wollen Sie den Verschlüsselungskey in einer eigenen, <b>nicht öffentlichen</b> Datei (/etc/network/wep.*; chmod 700) speichern? Falls nicht wird er in /etc/network/interfaces gespeichert und ist somit von jedem Benutzer an ihrem System lesbar. Sie könnten allerdings chmod 700 /etc/network/interfaces ausführen falls sie die <b>öffentliche</b> Methode wählen..."
+
+#: rc.cpp:162 rc.cpp:380
+#, no-c-format
+msgid "p&ublic"
+msgstr "öffentlich"
+
+#: rc.cpp:169 rc.cpp:387
+#, no-c-format
+msgid "AS&CII"
+msgstr "AS&CII"
+
+#: rc.cpp:175 rc.cpp:393
+#, no-c-format
+msgid "Hex"
+msgstr "Hex"
+
+#: rc.cpp:179 rc.cpp:397
+#, no-c-format
+msgid "WEP Key:"
+msgstr "WEP Schlüssel:"
+
+#: rc.cpp:182 rc.cpp:400
+#, no-c-format
+msgid "64 bit"
+msgstr "64 bit"
+
+#: rc.cpp:185 rc.cpp:403
+#, no-c-format
+msgid "128 bit"
+msgstr "128 bit"
+
+#: rc.cpp:188 rc.cpp:406
+#, no-c-format
+msgid "152 bit"
+msgstr "152 bit"
+
+#: rc.cpp:191 rc.cpp:409
+#, no-c-format
+msgid "256 bit"
+msgstr "256 bit"
+
+#: rc.cpp:194 rc.cpp:412
+#, no-c-format
+msgid ""
+"<b>Note:</b> WPA passphrase must be 8..63 characters! If you don't enter a "
+"key no wireless encryption will be used."
+msgstr "<b>Hinweis:</b> Der WPA-Schlüssel muss 8..63 Zeichen haben! Wenn Sie keinen Schlüssel eingeben wird die Verschlüsselung deaktiviert."
+
+#: rc.cpp:197 rc.cpp:415
+#, no-c-format
+msgid "WPA Key:"
+msgstr "WPA Schlüssel:"
+
+#: rc.cpp:200 rc.cpp:418
+#, no-c-format
+msgid "WEP"
+msgstr "WEP"
+
+#: rc.cpp:203 rc.cpp:421
+#, no-c-format
+msgid "WPA-PSK"
+msgstr "WPA-PSK"
+
+#: rc.cpp:206 rc.cpp:424
+#, no-c-format
+msgid "Network"
+msgstr "Netzwerk"
+
+#: rc.cpp:209 rc.cpp:427
+#, no-c-format
+msgid "Net&work Interfaces"
+msgstr "Netz&werkgeräte"
+
+#: rc.cpp:212 rc.cpp:430
+#, no-c-format
+msgid "&Nameserver"
+msgstr "&Nameserver"
+
+#: rc.cpp:215 rc.cpp:433
+#, no-c-format
+msgid "Hostname:"
+msgstr "Rechnername:"
+
+#: rc.cpp:218 rc.cpp:436
+#, no-c-format
+msgid "DNS Servers"
+msgstr "DNS Server"
+

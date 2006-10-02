@@ -1,0 +1,25 @@
+# knxcc-module: dialog
+
+DIALOG="dialog"
+
+function dlg()
+{
+   # reset Variables
+   ARG=; PARAMETERS=;
+   if [ $# -eq 2 ]; then
+      case "$1" in
+      --msgbox|--yesno|--infobox|--inputbox|--textbox|--gauge)
+         ARG="0 0"
+         ;;
+      esac
+   fi
+   # escape Parameters
+   PARAMETERS="\"$1\""
+   while shift; do
+      (($#)) && PARAMETERS="$PARAMETERS \"$1\""
+   done
+   output="$(eval $DIALOG --backtitle 'Kanotix-Control-Center' $PARAMETERS $ARG 3>&1 1>&2 2>&3 )"
+   rc=$?
+   echo "$output"
+   return $rc
+}

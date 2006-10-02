@@ -1,0 +1,40 @@
+# knxcc-module: info
+
+register_module info $"Infos"
+
+function kanotix_version()
+{
+    cat /etc/kanotix-version
+}
+
+function kanotix_info()
+{
+    infobash $1 1 | perl -pe 's///g;'
+}
+
+function info_interface()
+{
+    while true;
+    do
+        selection=$(dlg --menu $"Infos" 0 0 0 \
+            "version" $"Kanotix Version" \
+            "infobash" $"Infobash" \
+            "return" $"Return to main Menu")
+        
+        case $selection in
+        return|"")
+            break
+            ;;
+        version)
+            dlg --msgbox $"You are using ""$(kanotix_version)"
+            ;;
+        infobash)
+            clear
+            infobash -v3
+            echo
+            echo $"Press <Enter> to continue..."
+            read
+            ;;
+        esac
+    done
+}

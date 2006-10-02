@@ -1,0 +1,756 @@
+#!/bin/bash
+# knxcc-module: network
+# partially based on netcardconfig: (C) Klaus Knopper Nov 2002
+
+register_module network $"Network"
+
+IFS_SP=" "
+IFS_NL="$(echo -e "\n")"
+IFS_CR="$(echo -e "\r")"
+
+TMP="$(mktemp -t knxcc_network.XXXXXX)"
+iface_temp="$(mktemp -t knxcc_network.iface.XXXXXX)"
+iface_block_sep="# --- $RANDOM --- temporary placeholder"
+rm -f "$TMP"
+
+############################################################################
+# Get/Read
+function get_interface_list()
+{
+    # tail -n +3 /proc/net/dev|awk -F: '{print $1}'|sed "s/\s*//"|grep -v -e ^lo -e ^vmnet|sort
+    /usr/bin/interfaces -d
+}
+
+function get_wireless_devices()
+{
+    # LANG=C LC_MESSAGEWS=C iwconfig $DV 2>/dev/null | awk '/802\.11|READY|ESSID/{print $1}'
+    /usr/bin/interfaces -w
+}
+
+function get_nameservers()
+{
+    awk '{if($1=="nameserver"){print $2}}' /etc/resolv.conf
+}
+
+function get_modes()
+{
+    awk '{if(/^[ \t]*(auto|allow-)/){if(/[ \t]'$1'[ \t]*/){print $1}}}' /etc/network/interfaces | tr '\n' ' '
+}
+
+function is_wireless()
+{
+    [ "$(echo $1 $(get_wireless_devices) |tr ' ' '\n'|sort|uniq -d)" ] && return 0
+    return 1
+}
+
+function read_wlan_settings()
+{
+    interface=$1
+    awk '/^\s*iface/{if($2=="'"$interface"'"){found=1}else{found=0}} 
+    /essid/{if(found){for(i=NF;i>=2;i--)essid=$i "~" essid}}
+    /nwid/{if(found){nwid=$NF}}
+    /mode/{if(found){mode=$NF}}
+    /channel/{if(found){channel=$NF}}
+    /freq/{if(found){freq=$NF}}
+    /sens/{if(found){sens=$NF}}
+    /rate/{if(found){rate=$NF}}
+    /rts/{if(found){rts=$NF}}
+    /frag/{if(found){frag=$NF}}
+    /iwconfig/{if(!/KEY/){if(found){iwconfig=$NF}}}
+    /iwspy/{if(found){iwspy=$NF}}
+    /iwpriv/{if(found){iwpriv=$NF}}
+    /wireless[-_]key/{if(found){gsub(/^\W*wireless[-_]key\W*/,"");key=$0}}
+    /wpa-psk/{if(found){wpapsk=$NF}}
+    END{
+      print essid"\r"nwid"\r"mode"\r"channel"\r"freq"\r"sens"\r"rate"\r"rts"\r"frag"\r"iwconfig"\r"iwspy"\r"iwpriv"\r"key"\r"wpapsk
+    }' /etc/network/interfaces
+}
+
+function read_lan_settings()
+{
+    interface=$1
+    awk '/^\s*iface/{if($2=="'"$interface"'"){found=1; method=$4}else{found=0}} 
+    /address/{if(found){address=$NF}}
+    /netmask/{if(found){netmask=$NF}}
+    /broadcast/{if(found){broadcast=$NF}}
+    /gateway/{if(found){gateway=$NF}}
+    END{print method"\r"address"\r"netmask"\r"broadcast"\r"gateway}' /etc/network/interfaces
+}
+
+function get_interface_config()
+{
+    IFS="$IFS_NL"
+    for interface in $(interfaces -i $1)
+    do
+        IFS="$IFS_SP"
+        unset IFACE DRIVER MEDIUM BUS MAC DESC ESSID NWID MODE CHANNEL FREQ SENS RATE RTS FRAG IWCONFIG IWSPY IWPRIV WPAKEY KEY PUBKEY METHOD ADDRESS NETMASK BROADCAST GATEWAY ENCRYPTION WPA_DRIVER
+        read IFACE DRIVER MEDIUM BUS MAC DESC < <(echo "$interface")
+        IFS="$IFS_CR" read METHOD ADDRESS NETMASK BROADCAST GATEWAY < <(read_lan_settings $IFACE)
+        
+        if [ "$MEDIUM" = "Wireless" ]; then
+            IFS="$IFS_CR" read ESSID NWID MODE CHANNEL FREQ SENS RATE RTS FRAG IWCONFIG IWSPY IWPRIV KEY WPAPSK < <(read_wlan_settings $IFACE)
+            ESSID=$(echo $ESSID | tr "~" " " | sed 's/ *$//')
+            if [ -z "$KEY" ]; then
+                if [ "$WPAPSK" ] || get_iface_block $IFACE ro | grep -q "wpa-"; then
+                    # we use WPA
+                    PUBKEY=0 # PUBKEY is only relevant for WEP
+                    # WPAKEY="$(awk '/network/{if(found){found=0}else{found=1}}/ssid/{if(/ssid=\"'"$ESSID"'\"/){found=1}else{found=0}}/#psk=/{if(found){gsub(/^\W*#psk="/,"");gsub(/"\W*$/,"");print}}' /etc/wpa_supplicant.conf)"
+                    WPAKEY="$(eval echo $WPAPSK)"
+                    ENCRYPTION="WPA"
+                else
+                    # we use private-stored WEP or no encryption
+                    KEY=$(cat /etc/network/wep.$IFACE 2>/dev/null)
+                    
+                    if [ -z "$KEY" ]; then
+                      PUBKEY=0
+                    else
+                      PUBKEY=-1
+                      ENCRYPTION="WEP"
+                    fi
+                fi
+            else
+                PUBKEY=1
+                ENCRYPTION="WEP"
+            fi
+            WPA_DRIVER="$(get_wpa_driver)"
+        fi
+    done
+    IFS="$IFS_SP"
+}
+
+function print_interface()
+{
+    get_interface_config $1
+    echo +$IFACE; echo +$DRIVER; echo +$MEDIUM; echo +$BUS; echo +$MAC; echo +$DESC
+    echo +$(get_modes $IFACE)
+    echo +$METHOD; echo +$ADDRESS; echo +$NETMASK; echo +$BROADCAST; echo +$GATEWAY
+    echo +$ESSID; echo +$NWID; echo +$MODE; echo +$CHANNEL; echo +$FREQ; echo +$SENS; echo +$RATE; echo +$RTS; echo +$FRAG; echo +$IWCONFIG; echo +$IWSPY; echo +$IWPRIV; echo +$WPA_DRIVER; echo +$WPAKEY; echo +$KEY; echo +$PUBKEY
+}
+
+function get_wpa_driver()
+{
+    [ -z "$IFACE" -a "$1" != "$IFACE" ] && get_interface_config $1
+    unset WPA_DRIVER
+    
+    case $DRIVER in
+      *)
+        WPA_DRIVER="wext"
+        ;;
+    esac
+  
+    if [ -z "$WPA_DRIVER" ]; then
+      if [ -d /proc/net/ndiswrapper/$IFACE ]; then
+        WPA_DRIVER=ndiswrapper
+      elif [ -d /proc/net/hostap/$IFACE ]; then
+        WPA_DRIVER=hostap
+      fi
+    fi
+    echo $WPA_DRIVER
+}
+
+############################################################################
+# Set/Write
+function set_nameservers()
+{
+    > /etc/resolv.conf
+    while (($#))
+    do
+        echo nameserver "$1" >> /etc/resolv.conf
+        shift
+    done
+}
+
+function set_mode()
+{
+    mode=$1; shift
+    iface=$1; shift
+    awk '{if($1=="'$mode'"){found=1; if(/[ \t]'$iface'[ \t]*/){print}else{sub("[ \t]+$", ""); print $0" '$iface'"}}else{print}}END{if(!found){print "'$mode' '$iface'"}}' /etc/network/interfaces > "$TMP"
+    rm -f /etc/network/interfaces
+    mv "$TMP" /etc/network/interfaces
+}
+
+function unset_mode()
+{
+    mode=$1; shift
+    iface=$1; shift
+    awk '{if($1=="'$mode'"){gsub("[ \t]*'$iface'[ \t]*"," "); if(!/^[ \t]*'$mode'[ \t]*$/){print}}else{print}}' /etc/network/interfaces > "$TMP"
+    rm -f /etc/network/interfaces
+    mv "$TMP" /etc/network/interfaces
+}
+
+function restart_interfaces()
+{
+    ifdown "$@"
+    ifup "$@"
+}
+
+function set_interface_config()
+{
+    iface=$1; shift
+    unset iface_block
+    get_interface_config $iface
+    while (($#))
+    do
+        var="${1%=*}"; value="${1#*=}";
+        if [ ${#var} -eq ${#1} ]; then
+            var="$1"; shift; value="$1"; shift
+        else
+            shift
+        fi
+        
+        # echo "var: $var - value: $value" >&2 # DEBUG
+        
+        declare NEW_$var="$value"
+        if [ -z "$value" ]; then
+            # echo "delete var: $var - old value: $(eval echo \$$var)" >&2 # DEBUG
+            eval $var=""
+            [ -z "$iface_block" ] && iface_block="$(get_iface_block $iface)"
+            
+            case $var in
+            METHOD)
+                # clear iface_block
+                echo | put_iface_block
+                iface_block=""
+                ;;
+            ADDRESS)
+                iface_block="$(echo "$iface_block" | change_iface_block --remove address)"
+                ;;
+            NETMASK)
+                iface_block="$(echo "$iface_block" | change_iface_block --remove netmask)"
+                ;;
+            BROADCAST)
+                iface_block="$(echo "$iface_block" | change_iface_block --remove broadcast)"
+                ;;
+            GATEWAY)
+                iface_block="$(echo "$iface_block" | change_iface_block --remove gateway)"
+                ;;
+            NWID)
+                iface_block="$(echo "$iface_block" | change_iface_block --remove wireless-nwid)"
+                ;;
+            MODE)
+                iface_block="$(echo "$iface_block" | change_iface_block --remove wireless-mode)"
+                ;;
+            CHANNEL)
+                iface_block="$(echo "$iface_block" | change_iface_block --remove wireless-channel)"
+                ;;
+            FREQ)
+                iface_block="$(echo "$iface_block" | change_iface_block --remove wireless-freq)"
+                ;;
+            IWCONFIG)
+                iface_block="$(echo "$iface_block" | change_iface_block --remove iwconfig)"
+                ;;
+            IWSPY)
+                iface_block="$(echo "$iface_block" | change_iface_block --remove iwspy)"
+                ;;
+            IWPRIV)
+                iface_block="$(echo "$iface_block" | change_iface_block --remove iwpriv)"
+                ;;
+            ESSID)
+                iface_block="$(echo "$iface_block" | change_iface_block --remove wireless-essid)"
+                ;;
+            PUBKEY|KEY)
+                rm -f /etc/network/wep.$iface
+                iface_block="$(echo "$iface_block" | change_iface_block --grep-param "iwconfig $iface key" --remove pre-up)"
+                iface_block="$(echo "$iface_block" | change_iface_block --remove wireless-key)"
+                ;;
+            WPAKEY)
+                WPAKEY=
+                iface_block="$(echo "$iface_block" | change_iface_block --remove wpa-driver wpa-ssid wpa-psk)"
+                # iface_block="$(echo "$iface_block" | change_iface_block --grep-param "wpa_supplicant" --remove pre-up)"
+                # awk '/^network={/{if(found){found=0}else{found=1;hold=$0}}/ssid/{if(/ssid=\"'"$ESSID"'\"/){found=1}else{found=0;print hold}}{if(!found){print}}' /etc/wpa_supplicant.conf > "$TMP"
+                # rm -f /etc/wpa_supplicant.conf
+                # mv "$TMP" /etc/wpa_supplicant.conf
+                ;;
+            esac
+        elif eval test \"\$$var\" != \"\$NEW_$var\"; then
+            [ -z "$iface_block" ] && iface_block="$(get_iface_block $iface)"
+            # echo "changed var: $var - old value: $(eval echo \$$var) - new value: $(eval echo \$NEW_$var)" >&2 # DEBUG
+            case $var in
+            METHOD)
+                [ "$NEW_METHOD" = "dhcp" ] && iface_block="$(echo "$iface_block" | change_iface_block --remove gateway address netmask broadcast)" 
+                iface_block="$(echo "$iface_block" | change_iface_block --method $NEW_METHOD)"
+                ;;
+            ADDRESS)
+                iface_block="$(echo "$iface_block" | change_iface_block --set address $NEW_ADDRESS)"
+                ;;
+            NETMASK)
+                iface_block="$(echo "$iface_block" | change_iface_block --set netmask $NEW_NETMASK)"
+                ;;
+            BROADCAST)
+                iface_block="$(echo "$iface_block" | change_iface_block --set broadcast $NEW_BROADCAST)"
+                ;;
+            GATEWAY)
+                iface_block="$(echo "$iface_block" | change_iface_block --set gateway $NEW_GATEWAY)"
+                ;;
+            NWID)
+                iface_block="$(echo "$iface_block" | change_iface_block --set wireless-nwid $NEW_NWID)"
+                ;;
+            MODE)
+                iface_block="$(echo "$iface_block" | change_iface_block --set wireless-mode $NEW_MODE)"
+                ;;
+            CHANNEL)
+                iface_block="$(echo "$iface_block" | change_iface_block --set wireless-channel $NEW_CHANNEL)"
+                ;;
+            FREQ)
+                iface_block="$(echo "$iface_block" | change_iface_block --set wireless-freq $NEW_FREQ)"
+                ;;
+            IWCONFIG)
+                iface_block="$(echo "$iface_block" | change_iface_block --set iwconfig $NEW_IWCONFIG)"
+                ;;
+            IWSPY)
+                iface_block="$(echo "$iface_block" | change_iface_block --set iwspy $NEW_IWSPY)"
+                ;;
+            IWPRIV)
+                iface_block="$(echo "$iface_block" | change_iface_block --set iwpriv $NEW_IWPRIV)"
+                ;;
+            ESSID)
+                ESSID="$NEW_ESSID"
+                iface_block="$(echo "$iface_block" | change_iface_block --set wireless-essid "$NEW_ESSID")"
+                ;;
+            PUBKEY)
+                PUBKEY="$NEW_PUBKEY"
+                case $NEW_PUBKEY in
+                1)
+                    rm -f /etc/network/wep.$iface
+                    iface_block="$(echo "$iface_block" | change_iface_block --grep-param "iwconfig $iface key" --remove pre-up)"
+                    iface_block="$(echo "$iface_block" | change_iface_block --set wireless-key $KEY)"
+                    ;;
+                -1)
+                    iface_block="$(echo "$iface_block" | change_iface_block --remove wireless-key)"
+                    echo "$KEY" > /etc/network/wep.$iface && chmod 700 /etc/network/wep.$iface && \
+                    iface_block="$(echo "$iface_block" | change_iface_block --grep-param "iwconfig $iface key" --set pre-up "KEY=\$(cat /etc/network/wep.$iface) && iwconfig $iface key \$KEY" )"
+                    ;;
+                0) # Note: this deletes the KEY!
+                    rm -f /etc/network/wep.$iface
+                    iface_block="$(echo "$iface_block" | change_iface_block --grep-param "iwconfig $iface key" --remove pre-up)"
+                    iface_block="$(echo "$iface_block" | change_iface_block --remove wireless-key)"
+                    KEY=
+                    ;;
+                esac
+                ;;
+            KEY)
+                KEY="$NEW_KEY"
+                if [ -n "$KEY" ]; then
+                    if [ -n "$PUBKEY" ] && [ "$PUBKEY" -eq 1 ]; then
+                        iface_block="$(echo "$iface_block" | change_iface_block --set wireless-key $NEW_KEY)"
+                    else
+                        echo "$NEW_KEY" > /etc/network/wep.$iface && chmod 700 /etc/network/wep.$iface && \
+                        iface_block="$(echo "$iface_block" | change_iface_block --grep-param "iwconfig $iface key" --set pre-up "KEY=\$(cat /etc/network/wep.$iface) && iwconfig $iface key \$KEY" )"
+                        # Note: PUBKEY will be set to -1 after that!
+                    fi
+                else
+                    rm -f /etc/network/wep.$iface
+                    iface_block="$(echo "$iface_block" | change_iface_block --grep-param "iwconfig $iface key" --remove pre-up)"
+                    iface_block="$(echo "$iface_block" | change_iface_block --remove wireless-key)"
+                fi
+                ;;
+            WPAKEY)
+                WPAKEY="$NEW_WPAKEY"
+                # iface_block="$(echo "$iface_block" | change_iface_block --grep-param "wpa_supplicant" --set pre-up "wpa_supplicant -D$WPA_DRIVER -i$IFACE -c/etc/wpa_supplicant.conf -B" )"
+                # # rewrite wpa_supplicant.conf
+                # awk '/^network={/{if(found){found=0}else{found=1;hold=$0}}/ssid/{if(/ssid=\"'"$ESSID"'\"/){found=1}else{found=0;print hold}}{if(!found){print}}' /etc/wpa_supplicant.conf > "$TMP"
+                # wpa_passphrase "$ESSID" "$WPAKEY" 2>/dev/null >> "$TMP"
+                # rm -f /etc/wpa_supplicant.conf
+                # mv "$TMP" /etc/wpa_supplicant.conf
+                iface_block="$(echo "$iface_block" | change_iface_block --set wpa-ssid "$ESSID" | change_iface_block --set wpa-driver "$WPA_DRIVER" | change_iface_block --set wpa-psk "\"$WPAKEY\"")"
+                ;;
+            esac
+        fi
+    done
+    if [ "$iface_block" ]; then
+        echo "$iface_block" | put_iface_block
+    fi
+}
+
+function put_iface_block()
+{
+    perl -pi -e "s~$iface_block_sep~$(cat)~" $iface_temp
+    cat $iface_temp | trim_lines > /etc/network/interfaces    # DEBUG-mode, uncomment this!
+    rm -f $iface_temp
+}
+
+function get_iface_block()
+{
+    iface=$1
+    # $2 = ro ---> read-only
+    [ "$2" != "ro" ] && awk '/^\s*iface/{if($2=="'"$iface"'"){found=1}else{found=0}} {if(found){if(!done){print "'"$iface_block_sep"'\n"; done=1}}else{print}}END{if(!done){print "'"$iface_block_sep"'"}}' /etc/network/interfaces > $iface_temp
+    awk '/^\s*iface/{if($2=="'"$iface"'"){found=1}else{found=0}} {if(found){print; done=1}} END{if(!done){print "iface '$iface' inet manual"}}' /etc/network/interfaces | awk_escape | trim_lines
+}
+
+function change_iface_block()
+{
+    if [ "$1" = "--grep-param" ]; then
+        grep_parameter="if(!/$2/)"
+        shift 2
+    else
+        grep_parameter="if(!//)"
+    fi
+    
+    case "$1" in
+    --remove)
+        shift
+        sub() # recursive sub-function!
+        {
+            var="$1"; shift
+            [ -z "$var" ] && cat && return 0
+            awk '{if($1=="'$var'"){'"$grep_parameter"'{print}}else{print}}' | sub $@
+        }
+        sub $@
+        ;;
+    --method)
+        shift
+        awk '/^\s*iface/{$4="'$1'"}{print}'
+        ;;
+    --set)
+        shift
+        var="$1"
+        # value="$(echo "$2" | awk_escape)"
+        value="$2"
+        output="$( ( echo -e "\t"; echo "$var $value" ) | awk_escape)"
+        awk '{if($1=="'$var'"){'"$grep_parameter"'{print}else{found=1; print "'"$output"'"}}else{print}}END{if(!found){print "'"$output"'"}}' 2>/dev/null
+        ;;
+    esac
+}
+
+############################################################################
+# sed-stuff
+function awk_escape()
+{
+    sed -e 's/\\/\\\\/g; s/\$/\\\$/g; s/~/\\~/g; s/"/\\"/g;'
+}
+
+function trim_lines()
+{
+    sed -e :a -e '/^\n*$/{$d;N;ba' -e '}'
+}
+
+############################################################################
+# Validation
+function valid_ip()
+(
+    IFS=.
+    set -- $1
+    [ $# -ne 4 ] && return 1
+    for n
+    do
+      case $n in
+          *[!0-9]* | *[0-9][0-9][0-9][0-9]* | "") return 1 ;;
+      esac
+      [ $n -le 255 ] || return 1
+    done
+)
+
+############################################################################
+# User-Interface
+function network_interface()
+{
+    while true;
+    do
+        selection=$(dlg --menu $"Network" 0 0 0 \
+            "interfaces" $"Configure network interfaces" \
+            "nameservers" $"Configure nameservers" \
+            "return" $"Return to main Menu")
+        
+        case $selection in
+        interfaces)
+            interfaces="$(get_interface_list)"
+            if [ -z "$interfaces" ]; then
+                dlg --msgbox $"No supported network cards found."
+            else
+                while true;
+                do
+                    unset dlg_args
+                    for interface in $interfaces
+                    do
+                        BUS=Ethernet; MEDIUM=Device; DESC=$interface
+                        [ -x /usr/bin/interfaces ] && read NAME DRIVER MEDIUM BUS MAC DESC < <(/usr/bin/interfaces -i $interface)
+                        dlg_args="$dlg_args \"$interface\" \"[$BUS-$MEDIUM] $DESC\""
+                    done
+                    unset interface
+                    interface="$(dlg --menu $"Please select network device" 0 0 0 $dlg_args "return" $"Return to main Menu")" || break
+                    [ "$interface" = "return" -o -z "$interface" ] && break
+                    ( configure_network_interface $interface )
+                done
+            fi
+            ;;
+        nameservers)
+            NAMESERVERS=$(get_nameservers)
+            value="$(dlg --inputbox $"Please enter the IP address of your nameserver(s):" 0 0 "$NAMESERVERS")"
+            if [ $? -eq 0 ]; then
+                set_nameservers $value
+            fi
+            ;;
+        return|"")
+            break
+            ;;
+        esac
+    done
+}
+
+function configure_network_interface()
+{
+    IFACE="$1"
+    
+    while true;
+    do
+        get_interface_config $IFACE
+        # echo "$IFACE - METHOD: $METHOD - ADDRESS: $ADDRESS" >&2 # DEBUG
+        interface=$IFACE
+        sub_configdlg()
+        {
+            sub="$(dlg --menu $"Configure network device $interface" 0 0 0 "$@" "restart" $"Restart this Interface" "return" $"Return to main Menu")"
+        }
+        unset wlan_dlg_options
+        if [ "$MEDIUM" = "Wireless" ]; then
+            wlan_dlg_options='"wireless" "'$"Wireless settings"'"'
+        fi
+        case $METHOD in
+        static)
+            sub_configdlg "method" $"Static" "ip" "$ADDRESS" "netmask" "$NETMASK" "broadcast" "$BROADCAST" "gateway" "$GATEWAY" $wlan_dlg_options
+            method="static"
+            ;;
+        dhcp)
+            sub_configdlg "method" $"DHCP" $wlan_dlg_options
+            method="dhcp"
+            ;;
+        *)
+            sub_configdlg "method" $"(unconfigured)" # $wlan_dlg_options
+            method="none"
+            ;;
+        esac
+        case $sub in
+        method)
+            value="$(dlg --default-item $method --menu $"Interface configuration method" 0 0 0 "none" $"(unconfigured interface)" "dhcp" $"DHCP" "static" $"Static")"
+            if [ $? -eq 0 ]; then
+                case $value in
+                dhcp)
+                    set_interface_config $interface METHOD dhcp
+                    ;;
+                static)
+                    [ "$ADDRESS" ] || ADDRESS="$(ifconfig $interface 2>/dev/null | grep inet | cut -d: -f2 | cut -d" " -f1)"
+                    [ "$ADDRESS" ] || ADDRESS="192.168.0.1"
+                    [ "$NETMASK" ] || NETMASK="$(ifconfig $interface 2>/dev/null | grep inet | cut -d: -f4 | cut -d" " -f1)"
+                    [ "$NETMASK" ] || NETMASK="255.255.255.0"
+                    [ "$BROADCAST" ] || BROADCAST="$(ifconfig $interface 2>/dev/null | grep inet | cut -d: -f3 | cut -d" " -f1)"
+                    [ "$BROADCAST" ] || BROADCAST="${ADDRESS%.*}.255"
+                    set_interface_config $interface METHOD static ADDRESS $ADDRESS NETMASK $NETMASK BROADCAST $BROADCAST
+                    ;;
+                none)
+                    set_interface_config $interface METHOD ""
+                    ;;
+                esac
+            fi
+            ;;
+        ip)
+            while true;
+            do
+                value="$(dlg --inputbox $"Please enter IP Address for $interface:" 0 0 "$IP")"
+                if [ $? -eq 0 ]; then
+                    if valid_ip $value; then
+                        set_interface_config $interface ADDRESS $value
+                        break
+                    else
+                        dlg --msgbox $"Invalid IP: $value"
+                    fi
+                else
+                    break
+                fi
+            done
+            ;;
+        netmask)
+            while true;
+            do
+                value="$(dlg --inputbox $"Please enter Network Mask for $interface:" 0 0 "$NM")"
+                if [ $? -eq 0 ]; then
+                    if valid_ip $value; then
+                        set_interface_config $interface NETMASK $value
+                        break
+                    else
+                        dlg --msgbox $"Invalid IP: $value"
+                    fi
+                else
+                    break
+                fi
+            done
+            ;;
+        broadcast)
+            while true;
+            do
+                value="$(dlg --inputbox $"Please enter Broadcast Address for $interface:" 0 0 "$BC")"
+                if [ $? -eq 0 ]; then
+                    if valid_ip $value; then
+                        set_interface_config $interface BROADCAST $value
+                        break
+                    else
+                        dlg --msgbox $"Invalid IP: $value"
+                    fi
+                else
+                    break
+                fi
+            done
+            ;;
+        gateway)
+            while true;
+            do
+                value="$(dlg --inputbox $"Please enter Default Gateway for $interface:" 0 0 "$DG")"
+                if [ $? -eq 0 ]; then
+                    if valid_ip $value; then
+                        set_interface_config $interface GATEWAY $value
+                        break
+                    else
+                        dlg --msgbox $"Invalid IP: $value"
+                    fi
+                else
+                    break
+                fi
+            done
+            ;;
+        wireless)
+            ( configure_wireless_interface $IFACE )
+            ;;
+        restart)
+            restart_interfaces $IFACE
+            ;;
+        return|"")
+            break
+            ;;
+        esac
+    done
+}
+
+function configure_wireless_interface()
+{
+    IFACE="$1"
+    
+    while true;
+    do
+        get_interface_config $IFACE
+        sub_configdlg()
+        {
+            sub="$(dlg --menu $"Configure wireless settings for $IFACE" 0 0 0 "$@" "return" $"Return to main Menu")"
+        }
+        unset sub_dlg_options
+        case $ENCRYPTION in
+        WEP)
+            key_value="[$ENCRYPTION] ${KEY#*:}"
+            ;;
+        WPA)
+            key_value="[$ENCRYPTION] $WPAKEY"
+            ;;
+        *)
+            key_value="(no key set)"
+            ;;
+        esac
+        sub_configdlg "essid" "$ESSID" "mode" "$MODE" "key" "$key_value" "nwid" "$NWID" "channel" "$CHANNEL" "freq" "$FREQ"
+        
+        case $sub in
+        mode)
+            value="$(dlg --default-item "${MODE:-Managed}" --menu $"Select Wireless-Mode" 0 0 0 "Managed" $"Managed" "Ad-Hoc" $"Ad-Hoc" "Master" $"Master" "Repeater" $"Repeater" "Secondary" $"Secondary" "Monitor" $"Monitor" "Auto" $"Auto")"
+            if [ $? -eq 0 ]; then
+                MODE="$value"
+                set_interface_config $IFACE MODE "$MODE"
+            fi
+            ;;
+        essid)
+            value="$(dlg --max-input 32 --inputbox $"Please enter ESSID for $IFACE:" 0 0 "${ESSID:-any}")"
+            if [ $? -eq 0 ]; then
+                ESSID="$value"
+                set_interface_config $IFACE ESSID "$ESSID"
+            fi
+            ;;
+        key)
+            new_encryption="$(dlg --default-item "$ENCRYPTION" --menu $"What encryption do you want to use?" 0 0 0 "(none)" $"no encryption, cleartext, not recommended" "WEP" $"WEP encryption" "WPA" $"WPA-PSK (recommended)")"
+            if [ $? -eq 0 ]; then
+                case $new_encryption in
+                WEP)
+                    default=$PUBKEY; [ -z "$default" -o "$default" -eq 0 ] && default=-1
+                    value="$(dlg --default-item "$default" --menu $"Where do you want to store the key?\nNote: if you select <public> it will be readable by any account on your system." 0 0 0 "-1" $"private (/etc/network/wep.*; chmod 700)" "1" $"public (/etc/network/interfaces)")"
+                    if [ $? -eq 0 ]; then
+                        PUBKEY="$value"
+                        while true;
+                        do
+                            value="$(dlg --inputbox $"Please enter your WEP-key in ASCII-mode for $IFACE:" 0 0 "${KEY#*:}")"
+                            if [ $? -eq 0 ]; then
+                                invalid_len=1
+                                case ${#value} in
+                                    0|5|13|16|29) invalid_len=0;;
+                                esac
+                                if ! ((invalid_len)); then
+                                    KEY="$value"
+                                    set_interface_config $IFACE PUBKEY "$PUBKEY" KEY "s:$KEY"
+                                    break
+                                else
+                                    dlg --msgbox $"Invalid WEP-Key length, only\n 5 (64 bit),\n 13 (128 bit),\n 16 (152 bit) or\n 29 (256 bit) \ncharacters are allowed!"
+                                fi
+                            else
+                                break
+                            fi
+                        done
+                    fi
+                    ;;
+                WPA)
+                    value="$(dlg --inputbox $"Please enter your WPA-PSK for $IFACE:" 0 0 "$WPAKEY")"
+                    if [ $? -eq 0 ]; then
+                        WPAKEY="$value"
+                        set_interface_config $IFACE PUBKEY "0" WPAKEY "$WPAKEY"
+                    fi
+                    ;;
+                *)
+                    set_interface_config $IFACE PUBKEY "0" WPAKEY ""
+                    ;;
+                esac
+            fi
+            ;;
+        nwid)
+            value="$(dlg --inputbox $"Please enter NWID (cell identifier) for $IFACE:" 0 0 "$NWID")"
+            if [ $? -eq 0 ]; then
+                NWID="$value"
+                set_interface_config $IFACE NWID "$NWID"
+            fi
+            ;;
+        channel)
+            while true;
+            do
+                value="$(dlg --inputbox $"Please enter channel for $IFACE (0-16, empty for auto):" 0 0 "$CHANNEL")"
+                if [ $? -eq 0 ]; then
+                    case $value in
+                    *[!0-9]*)
+                        dlg --msgbox $"Invalid channel, only integer values allowed!"
+                        ;;
+                    *)
+                        CHANNEL="$value"
+                        set_interface_config $IFACE CHANNEL "$CHANNEL"
+                        break
+                        ;;
+                    esac
+                else
+                    break
+                fi
+            done
+            ;;
+        freq)
+            while true
+            do
+                value="$(dlg --inputbox $"Please enter frequency for $IFACE (e.g 2.412G, empty for auto):" 0 0 "$FREQ")"
+                if [ $? -eq 0 ]; then
+                    case $value in
+                    [0-9].[0-9]*G | "")
+                        FREQ="$value"
+                        set_interface_config $IFACE FREQ "$FREQ"
+                        break
+                        ;;
+                    *)
+                        dlg --msgbox $"Invalid format, e.g 2.412G is allowed!"
+                        ;;
+                    esac
+                else
+                    break
+                fi
+            done
+            ;;
+        return|"")
+            break
+            ;;
+        esac
+    done
+}

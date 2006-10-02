@@ -1,0 +1,140 @@
+# translation of knxccserver.po to German
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Andreas Loibl <andreas@andreas-loibl.de>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: knxccserver\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-04-09 16:50+0200\n"
+"PO-Revision-Date: 2006-04-09 16:54+0200\n"
+"Last-Translator: Andreas Loibl <andreas@andreas-loibl.de>\n"
+"Language-Team: German <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+
+#: knxcc_server.cpp:44 knxcc_server.cpp:49 knxcc_server.cpp:57
+#: knxcc_server.cpp:62
+msgid "Status: %1"
+msgstr "Status: %1"
+
+#: knxcc_server.cpp:44 knxcc_server.cpp:57
+msgid "not running..."
+msgstr "läuft nicht..."
+
+#: knxcc_server.cpp:49 knxcc_server.cpp:62
+msgid "running..."
+msgstr "läuft..."
+
+#: rc.cpp:3 rc.cpp:118
+#, no-c-format
+msgid "Server"
+msgstr "Server"
+
+#: rc.cpp:6 rc.cpp:121
+#, no-c-format
+msgid "&SSH"
+msgstr "&SSH"
+
+#: rc.cpp:9 rc.cpp:74 rc.cpp:124 rc.cpp:189
+#, no-c-format
+msgid "Status: not running..."
+msgstr "Status:läuft nicht..."
+
+#: rc.cpp:12 rc.cpp:77 rc.cpp:127 rc.cpp:192
+#, no-c-format
+msgid "Action"
+msgstr "Aktion"
+
+#: rc.cpp:15 rc.cpp:80 rc.cpp:130 rc.cpp:195
+#, no-c-format
+msgid "Delete R&unlevel-Entry"
+msgstr "Runlevel-Eintrag &löschen"
+
+#: rc.cpp:18 rc.cpp:83 rc.cpp:133 rc.cpp:198
+#, no-c-format
+msgid "Alt+U"
+msgstr "Alt+L"
+
+#: rc.cpp:25 rc.cpp:90 rc.cpp:140 rc.cpp:205
+#, no-c-format
+msgid "Add a Runle&vel-Entry (Start service at Boot)"
+msgstr "Runle&vel-Eintrag (Dienst beim Booten starten)"
+
+#: rc.cpp:28 rc.cpp:93 rc.cpp:143 rc.cpp:208
+#, no-c-format
+msgid "Alt+V"
+msgstr "Alt+V"
+
+#: rc.cpp:31 rc.cpp:96 rc.cpp:146 rc.cpp:211
+#, no-c-format
+msgid "Restart"
+msgstr "Neu starten"
+
+#: rc.cpp:35 rc.cpp:100 rc.cpp:150 rc.cpp:215
+#, no-c-format
+msgid "S&top now"
+msgstr "Jetzt s&toppen"
+
+#: rc.cpp:38 rc.cpp:103 rc.cpp:153 rc.cpp:218
+#, no-c-format
+msgid "Alt+T"
+msgstr "Alt+T"
+
+#: rc.cpp:41 rc.cpp:106 rc.cpp:156 rc.cpp:221
+#, no-c-format
+msgid "Start &now"
+msgstr "Jetzt starte&n"
+
+#: rc.cpp:44 rc.cpp:109 rc.cpp:159 rc.cpp:224
+#, no-c-format
+msgid "Alt+N"
+msgstr "Alt+N"
+
+#: rc.cpp:47 rc.cpp:112 rc.cpp:162 rc.cpp:227
+#, no-c-format
+msgid "Refresh Status-&Information"
+msgstr "Status-&Informationen erneuern"
+
+#: rc.cpp:50 rc.cpp:115 rc.cpp:165 rc.cpp:230
+#, no-c-format
+msgid "Alt+I"
+msgstr "Alt+I"
+
+#: rc.cpp:53 rc.cpp:168
+#, no-c-format
+msgid "Host Key"
+msgstr "Host Key"
+
+#: rc.cpp:56 rc.cpp:171
+#, no-c-format
+msgid "&Generate new Host-Key"
+msgstr "Neuen Host-Key erzeu&gen"
+
+#: rc.cpp:59 rc.cpp:174
+#, no-c-format
+msgid "Alt+G"
+msgstr "Alt+G"
+
+#: rc.cpp:62 rc.cpp:177
+#, no-c-format
+msgid "Use existing Host-&Key"
+msgstr "Vorhandenen Host-&Key verwenden"
+
+#: rc.cpp:65 rc.cpp:180
+#, no-c-format
+msgid "Alt+K"
+msgstr "Alt+K"
+
+#: rc.cpp:68 rc.cpp:183
+#, no-c-format
+msgid "<b>Host Key</b>: (insert short description here)"
+msgstr "<b>Host Key</b>: (insert short description here)"
+
+#: rc.cpp:71 rc.cpp:186
+#, no-c-format
+msgid "M&ySQL"
+msgstr "M&ySQL"

@@ -1,0 +1,70 @@
+# knxcc-module: server
+
+register_module server $"Server"
+
+function ssh_hostkeys_exist()
+{
+    [ -e /etc/ssh/ssh_host_rsa_key ] || return 128
+    [ -e /etc/ssh/ssh_host_dsa_key ] || return 128
+    return 0
+}
+
+function ssh_create_hostkeys()
+{
+    [ -e /etc/ssh/ssh_host_rsa_key ] || ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -C '' -N ''
+    [ -e /etc/ssh/ssh_host_dsa_key ] || ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -C '' -N ''
+}
+
+function server_interface()
+{
+   while true;
+   do
+      server=$(dlg --menu $"Server" 0 0 0 \
+         "ssh" $"SSH-Server" \
+         "mysql" $"MySQL-Server" \
+         "return" $"Return to main Menu")
+      
+      case $server in
+      ssh)
+         action=$(dlg --menu $"Server:"" ($server)" 0 0 0 \
+         "start" $"Start now" \
+         "stop" $"Stop now" \
+         "restart" $"Restart now" \
+         "reload" $"Reload now")
+         
+         case $action in
+         start|restart)
+            ssh_hostkeys_exist || ssh_create_hostkeys
+            /etc/init.d/$server $action
+            ;;
+         stop|reload)
+            /etc/init.d/$server $action
+            ;;
+         *)
+            ;;
+         esac
+         ;;
+      mysql)
+         action=$(dlg --menu $"Server:"" ($server)" 0 0 0 \
+         "start" $"Start now" \
+         "stop" $"Stop now" \
+         "restart" $"Restart now" \
+         "reload" $"Reload now")
+         
+         case $action in
+         start|restart|stop|reload)
+            /etc/init.d/$server $action
+            ;;
+         *)
+            ;;
+         esac
+         ;;
+      return|"")
+         break
+         ;;
+      *)
+         dlg --msgbox $"Error: This module is not implemented yet!"
+         ;;
+      esac
+   done
+}

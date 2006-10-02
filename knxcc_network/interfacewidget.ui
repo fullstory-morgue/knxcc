@@ -1,0 +1,1040 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>InterfaceWidget</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>InterfaceWidget</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>496</width>
+            <height>360</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Interface</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QButtonGroup" row="0" column="0">
+            <property name="name">
+                <cstring>ifaceInfoGroup</cstring>
+            </property>
+            <property name="title">
+                <string>Interface details</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>interfaceDetails</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QTabWidget" row="1" column="0">
+            <property name="name">
+                <cstring>configTabWidget</cstring>
+            </property>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>ifaceTabWidget</cstring>
+                </property>
+                <attribute name="title">
+                    <string>In&amp;terface</string>
+                </attribute>
+                <vbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QCheckBox">
+                        <property name="name">
+                            <cstring>autoEnable</cstring>
+                        </property>
+                        <property name="text">
+                            <string>a&amp;uto enable this interface on boot</string>
+                        </property>
+                        <property name="accel">
+                            <string>Alt+U</string>
+                        </property>
+                    </widget>
+                    <widget class="Line">
+                        <property name="name">
+                            <cstring>interfaceLine</cstring>
+                        </property>
+                        <property name="frameShape">
+                            <enum>HLine</enum>
+                        </property>
+                        <property name="frameShadow">
+                            <enum>Sunken</enum>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                    </widget>
+                    <widget class="QLabel">
+                        <property name="name">
+                            <cstring>hotplugEnableLabel</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&lt;b&gt;allow-hotplug&lt;/b&gt;: this option is useful together with
+&lt;b&gt;ifplugd&lt;/b&gt;, which is a daemon that automatically configures your ethernet device when a cable is plugged in and automatically unconfigures it if the cable is pulled. This is useful on laptops with onboard network adapters, since it will only configure the interface when a cable is really connected.</string>
+                        </property>
+                    </widget>
+                    <widget class="QCheckBox">
+                        <property name="name">
+                            <cstring>hotplugEnable</cstring>
+                        </property>
+                        <property name="text">
+                            <string>enable "allow-hotplu&amp;g" for this interface</string>
+                        </property>
+                        <property name="accel">
+                            <string>Alt+G</string>
+                        </property>
+                    </widget>
+                    <spacer>
+                        <property name="name">
+                            <cstring>ifaceSpacer</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>30</width>
+                                <height>30</height>
+                            </size>
+                        </property>
+                    </spacer>
+                </vbox>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>ipConfTab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>&amp;IP address</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QButtonGroup" row="0" column="0">
+                        <property name="name">
+                            <cstring>ipConfGroup</cstring>
+                        </property>
+                        <property name="title">
+                            <string>IP-Configuration</string>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QRadioButton" row="0" column="0" rowspan="1" colspan="2">
+                                <property name="name">
+                                    <cstring>useDHCP</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>DH&amp;CP</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+C</string>
+                                </property>
+                            </widget>
+                            <widget class="QRadioButton" row="1" column="0" rowspan="1" colspan="2">
+                                <property name="name">
+                                    <cstring>useStatic</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>&amp;Static IP</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+S</string>
+                                </property>
+                            </widget>
+                            <spacer row="2" column="0">
+                                <property name="name">
+                                    <cstring>staticLeftSpacer</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Fixed</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>20</width>
+                                        <height>20</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                            <widget class="QFrame" row="2" column="1">
+                                <property name="name">
+                                    <cstring>staticFrame</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>false</bool>
+                                </property>
+                                <property name="frameShape">
+                                    <enum>StyledPanel</enum>
+                                </property>
+                                <property name="frameShadow">
+                                    <enum>Raised</enum>
+                                </property>
+                                <grid>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <widget class="QLabel" row="1" column="0">
+                                        <property name="name">
+                                            <cstring>staticNetmaskLabel</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>Network Mask:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel" row="2" column="0">
+                                        <property name="name">
+                                            <cstring>staticBroadcastLabel</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>Broadcast Address:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel" row="3" column="0">
+                                        <property name="name">
+                                            <cstring>staticGatewayLabel</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>Default Gateway:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLineEdit" row="3" column="1">
+                                        <property name="name">
+                                            <cstring>staticGateway</cstring>
+                                        </property>
+                                        <property name="inputMask">
+                                            <string>000.000.000.000; </string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLineEdit" row="2" column="1">
+                                        <property name="name">
+                                            <cstring>staticBroadcast</cstring>
+                                        </property>
+                                        <property name="inputMask">
+                                            <string>000.000.000.000; </string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLineEdit" row="1" column="1">
+                                        <property name="name">
+                                            <cstring>staticNetmask</cstring>
+                                        </property>
+                                        <property name="inputMask">
+                                            <string>000.000.000.000; </string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLineEdit" row="0" column="1">
+                                        <property name="name">
+                                            <cstring>staticIP</cstring>
+                                        </property>
+                                        <property name="inputMask">
+                                            <string>000.000.000.000; </string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel" row="0" column="0">
+                                        <property name="name">
+                                            <cstring>staticIPLabel</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>IP Address:</string>
+                                        </property>
+                                    </widget>
+                                </grid>
+                            </widget>
+                        </grid>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>wlanConfTab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>&amp;WLAN settings</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QLabel" row="0" column="0">
+                        <property name="name">
+                            <cstring>wirelessEssidLabel</cstring>
+                        </property>
+                        <property name="text">
+                            <string>ESSID:</string>
+                        </property>
+                    </widget>
+                    <widget class="QLineEdit" row="0" column="1" rowspan="1" colspan="2">
+                        <property name="name">
+                            <cstring>wirelessEssid</cstring>
+                        </property>
+                        <property name="maxLength">
+                            <number>32</number>
+                        </property>
+                    </widget>
+                    <widget class="QComboBox" row="1" column="1" rowspan="1" colspan="2">
+                        <item>
+                            <property name="text">
+                                <string>(unconfigured)</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>Managed</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>Ad-Hoc</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>Master</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>Repeater</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>Secondary</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>Auto</string>
+                            </property>
+                        </item>
+                        <property name="name">
+                            <cstring>wirelessMode</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="1" column="0">
+                        <property name="name">
+                            <cstring>wirelessModeLabel</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Mode:</string>
+                        </property>
+                    </widget>
+                    <widget class="QButtonGroup" row="2" column="0" rowspan="1" colspan="2">
+                        <property name="name">
+                            <cstring>wirelessChanGroup</cstring>
+                        </property>
+                        <property name="title">
+                            <string>Channel/ Frequency</string>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QRadioButton" row="0" column="0">
+                                <property name="name">
+                                    <cstring>wirelessChanAutoRadio</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>A&amp;uto</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+U</string>
+                                </property>
+                                <property name="checked">
+                                    <bool>true</bool>
+                                </property>
+                            </widget>
+                            <widget class="QRadioButton" row="1" column="0">
+                                <property name="name">
+                                    <cstring>wirelessChanChanRadio</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>&amp;Channel:</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+C</string>
+                                </property>
+                            </widget>
+                            <widget class="QRadioButton" row="2" column="0">
+                                <property name="name">
+                                    <cstring>wirelessChanFreqRadio</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Fre&amp;quency:</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+Q</string>
+                                </property>
+                            </widget>
+                            <widget class="QSpinBox" row="1" column="1">
+                                <property name="name">
+                                    <cstring>wirelessChan</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>false</bool>
+                                </property>
+                            </widget>
+                            <widget class="QLineEdit" row="2" column="1">
+                                <property name="name">
+                                    <cstring>wirelessFreq</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>false</bool>
+                                </property>
+                                <property name="text">
+                                    <string>.G</string>
+                                </property>
+                                <property name="inputMask">
+                                    <string>9.999G;_</string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <spacer row="3" column="0" rowspan="1" colspan="2">
+                        <property name="name">
+                            <cstring>wirelessConfGroupSpacer</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>150</width>
+                                <height>16</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QButtonGroup" row="2" column="2" rowspan="3" colspan="1">
+                        <property name="name">
+                            <cstring>wirelessAdvGroup</cstring>
+                        </property>
+                        <property name="title">
+                            <string>Advanced options</string>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QLabel" row="0" column="0">
+                                <property name="name">
+                                    <cstring>advNwidLabel</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>NWID:</string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="2" column="0">
+                                <property name="name">
+                                    <cstring>advIwspyLabel</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>iwspy-options:</string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="1" column="0">
+                                <property name="name">
+                                    <cstring>advIwconfigLabel</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>iwconfig-options:</string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="3" column="0">
+                                <property name="name">
+                                    <cstring>advIwprivLabel</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>iwpriv-options:</string>
+                                </property>
+                            </widget>
+                            <widget class="QLineEdit" row="2" column="1">
+                                <property name="name">
+                                    <cstring>advIwspy</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QLineEdit" row="3" column="1">
+                                <property name="name">
+                                    <cstring>advIwpriv</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QLineEdit" row="0" column="1">
+                                <property name="name">
+                                    <cstring>advNwid</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QLineEdit" row="1" column="1">
+                                <property name="name">
+                                    <cstring>advIwconfig</cstring>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>wlanSecurityTab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>WLAN &amp;security</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QCheckBox" row="0" column="0">
+                        <property name="name">
+                            <cstring>enableEncryption</cstring>
+                        </property>
+                        <property name="text">
+                            <string>E&amp;nable wireless encryption</string>
+                        </property>
+                        <property name="accel">
+                            <string>Alt+N</string>
+                        </property>
+                        <property name="checked">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                    <widget class="QWidgetStack" row="1" column="0" rowspan="1" colspan="2">
+                        <property name="name">
+                            <cstring>encryptionTypeStack</cstring>
+                        </property>
+                        <property name="frameShape">
+                            <enum>GroupBoxPanel</enum>
+                        </property>
+                        <property name="frameShadow">
+                            <enum>Sunken</enum>
+                        </property>
+                        <widget class="QWidget">
+                            <property name="name">
+                                <cstring>wepKeyPage</cstring>
+                            </property>
+                            <attribute name="id">
+                                <number>0</number>
+                            </attribute>
+                            <vbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QButtonGroup">
+                                    <property name="name">
+                                        <cstring>wepKeyStorageGroup</cstring>
+                                    </property>
+                                    <property name="frameShape">
+                                        <enum>NoFrame</enum>
+                                    </property>
+                                    <property name="title">
+                                        <string></string>
+                                    </property>
+                                    <grid>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <property name="margin">
+                                            <number>0</number>
+                                        </property>
+                                        <widget class="QRadioButton" row="1" column="0">
+                                            <property name="name">
+                                                <cstring>storePrivate</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>pri&amp;vate</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+V</string>
+                                            </property>
+                                            <property name="checked">
+                                                <bool>true</bool>
+                                            </property>
+                                        </widget>
+                                        <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
+                                            <property name="name">
+                                                <cstring>pubkeyLabel</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Would you like to store your wireless encryption key in it's own &lt;b&gt;private&lt;/b&gt; file (/etc/network/wep.*; chmod 700)? If you don't, your key will be stored in /etc/network/interfaces and will be readable by any account on your system. So you may want to 'chmod 700 /etc/network/interfaces' if you select the &lt;b&gt;public&lt;/b&gt; method...</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QRadioButton" row="1" column="1">
+                                            <property name="name">
+                                                <cstring>storePublic</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>p&amp;ublic</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+U</string>
+                                            </property>
+                                        </widget>
+                                    </grid>
+                                </widget>
+                                <widget class="Line">
+                                    <property name="name">
+                                        <cstring>wepKeyConfLine</cstring>
+                                    </property>
+                                    <property name="frameShape">
+                                        <enum>HLine</enum>
+                                    </property>
+                                    <property name="frameShadow">
+                                        <enum>Sunken</enum>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                </widget>
+                                <widget class="QButtonGroup">
+                                    <property name="name">
+                                        <cstring>wepKeyGroup</cstring>
+                                    </property>
+                                    <property name="frameShape">
+                                        <enum>NoFrame</enum>
+                                    </property>
+                                    <property name="title">
+                                        <string></string>
+                                    </property>
+                                    <grid>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <property name="margin">
+                                            <number>0</number>
+                                        </property>
+                                        <widget class="QRadioButton" row="0" column="1">
+                                            <property name="name">
+                                                <cstring>wepKeyAscii</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>AS&amp;CII</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+C</string>
+                                            </property>
+                                            <property name="checked">
+                                                <bool>true</bool>
+                                            </property>
+                                        </widget>
+                                        <widget class="QRadioButton" row="0" column="2">
+                                            <property name="name">
+                                                <cstring>wepKeyHex</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Hex</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string></string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QLineEdit" row="1" column="1" rowspan="1" colspan="2">
+                                            <property name="name">
+                                                <cstring>wepKey</cstring>
+                                            </property>
+                                        </widget>
+                                        <widget class="QLabel" row="1" column="0">
+                                            <property name="name">
+                                                <cstring>wepKeyLabel</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>WEP Key:</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QComboBox" row="0" column="0">
+                                            <item>
+                                                <property name="text">
+                                                    <string>64 bit</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>128 bit</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>152 bit</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>256 bit</string>
+                                                </property>
+                                            </item>
+                                            <property name="name">
+                                                <cstring>wepBits</cstring>
+                                            </property>
+                                            <property name="currentItem">
+                                                <number>1</number>
+                                            </property>
+                                        </widget>
+                                    </grid>
+                                </widget>
+                                <spacer>
+                                    <property name="name">
+                                        <cstring>wepSpacer</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Vertical</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>30</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                            </vbox>
+                        </widget>
+                        <widget class="QWidget">
+                            <property name="name">
+                                <cstring>wpaKeyPage</cstring>
+                            </property>
+                            <attribute name="id">
+                                <number>1</number>
+                            </attribute>
+                            <vbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>wpaKeyConfLabel</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>&lt;b&gt;Note:&lt;/b&gt; WPA passphrase must be 8..63 characters! If you don't enter a key no wireless encryption will be used.</string>
+                                    </property>
+                                </widget>
+                                <widget class="QLayoutWidget">
+                                    <property name="name">
+                                        <cstring>wpaKeyLayout</cstring>
+                                    </property>
+                                    <hbox>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="QLabel">
+                                            <property name="name">
+                                                <cstring>wpaKeyLabel</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>WPA Key:</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QLineEdit">
+                                            <property name="name">
+                                                <cstring>wpaKey</cstring>
+                                            </property>
+                                            <property name="maxLength">
+                                                <number>63</number>
+                                            </property>
+                                        </widget>
+                                    </hbox>
+                                </widget>
+                                <spacer>
+                                    <property name="name">
+                                        <cstring>wpaSpacer</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Vertical</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>30</width>
+                                            <height>27</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                            </vbox>
+                        </widget>
+                    </widget>
+                    <widget class="QComboBox" row="0" column="1">
+                        <item>
+                            <property name="text">
+                                <string>WEP</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>WPA-PSK</string>
+                            </property>
+                        </item>
+                        <property name="name">
+                            <cstring>encryptionType</cstring>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+        </widget>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>useStatic</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>staticFrame</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>useStatic</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>useDHCP</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>staticIP</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>staticNetmask</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>staticBroadcast</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>staticGateway</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>wirelessEssid</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>wirelessMode</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>enableEncryption</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>encryptionType</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>enableEncryption</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>encryptionTypeStack</receiver>
+        <slot>setShown(bool)</slot>
+    </connection>
+    <connection>
+        <sender>encryptionType</sender>
+        <signal>activated(int)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>wepKey</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>wepKeyStorageGroup</sender>
+        <signal>clicked(int)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>wpaKey</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>encryptionType</sender>
+        <signal>activated(int)</signal>
+        <receiver>encryptionTypeStack</receiver>
+        <slot>raiseWidget(int)</slot>
+    </connection>
+    <connection>
+        <sender>enableEncryption</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>wirelessChanFreqRadio</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>wirelessFreq</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>wirelessChanChanRadio</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>wirelessChan</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>wirelessChanGroup</sender>
+        <signal>clicked(int)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>wirelessChan</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>wirelessFreq</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>advNwid</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>advIwconfig</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>advIwspy</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>advIwpriv</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>wirelessMode</sender>
+        <signal>activated(int)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>wepKeyAscii</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>wepUseAscii(bool)</slot>
+    </connection>
+    <connection>
+        <sender>wepKeyHex</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>wepUseHex(bool)</slot>
+    </connection>
+    <connection>
+        <sender>wepBits</sender>
+        <signal>activated(int)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>wepKeyLenChanged()</slot>
+    </connection>
+    <connection>
+        <sender>wpaKey</sender>
+        <signal>lostFocus()</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>wpaKeyLenCheck()</slot>
+    </connection>
+    <connection>
+        <sender>enableEncryption</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>wpaKeyLenCheck()</slot>
+    </connection>
+    <connection>
+        <sender>autoEnable</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>hotplugEnable</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>InterfaceWidget</receiver>
+        <slot>changed()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>configTabWidget</tabstop>
+    <tabstop>useDHCP</tabstop>
+    <tabstop>useStatic</tabstop>
+    <tabstop>staticIP</tabstop>
+    <tabstop>staticNetmask</tabstop>
+    <tabstop>staticBroadcast</tabstop>
+    <tabstop>staticGateway</tabstop>
+    <tabstop>wirelessEssid</tabstop>
+    <tabstop>wirelessMode</tabstop>
+    <tabstop>wirelessChanAutoRadio</tabstop>
+    <tabstop>wirelessChan</tabstop>
+    <tabstop>wirelessFreq</tabstop>
+    <tabstop>advNwid</tabstop>
+    <tabstop>advIwconfig</tabstop>
+    <tabstop>advIwspy</tabstop>
+    <tabstop>advIwpriv</tabstop>
+    <tabstop>enableEncryption</tabstop>
+    <tabstop>encryptionType</tabstop>
+    <tabstop>wpaKey</tabstop>
+    <tabstop>storePrivate</tabstop>
+    <tabstop>wepBits</tabstop>
+    <tabstop>wepKeyAscii</tabstop>
+    <tabstop>wepKey</tabstop>
+</tabstops>
+<slots>
+    <slot>changed()</slot>
+    <slot>wepUseAscii(bool)</slot>
+    <slot>wepUseHex(bool)</slot>
+    <slot>wepKeyLenChanged()</slot>
+    <slot>wpaKeyLenCheck()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

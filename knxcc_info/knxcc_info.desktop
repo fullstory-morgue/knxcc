@@ -1,0 +1,15 @@
+[Desktop Entry]
+Encoding=UTF-8
+Icon=kanotix
+Type=Application
+Exec=kcmshell knxcc_info
+
+X-KDE-Library=knxcc_info
+X-KDE-FactoryName=knxcc_info
+X-KDE-ParentApp=kinfocenter
+
+Name=KANOTIX
+Comment=Information about Kanotix
+Comment[de]=Informationen über Kanotix
+
+Categories=Qt;KDE;X-KDE-information;

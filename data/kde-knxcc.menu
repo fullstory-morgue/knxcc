@@ -1,0 +1,16 @@
+ <!DOCTYPE Menu PUBLIC "-//freedesktop//DTD Menu 1.0//EN"
+  "http://www.freedesktop.org/standards/menu-spec/1.0/menu.dtd">
+ 
+<Menu>
+	<Name>Applications</Name>
+        <Menu>
+                <Name>Kanotix</Name>
+                <Menu>
+                        <Name>Config</Name>
+                        <Directory>/usr/share/applnk/Kanotix/Config/.directory</Directory>
+                        <Include>
+                                <Category>X-KDE-settings-kanotix</Category>
+                        </Include>
+                </Menu>
+        </Menu>
+</Menu>

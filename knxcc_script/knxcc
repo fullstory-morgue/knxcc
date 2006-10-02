@@ -1,0 +1,58 @@
+#!/bin/bash
+# Kanotix-Control-Center
+# by Andreas Loibl <andreas@andreas-loibl.de>
+# License: GPL
+SEARCHPATH="/usr/share/knxcc"
+
+export TEXTDOMAINDIR="/usr/share/locale"
+export TEXTDOMAIN=knxccscript
+
+MODULES="\\"; export MODULES
+function register_module()
+{
+MODULES="$MODULES
+\"$1\" \"$2\" \\"
+}
+
+BACKDIR="$PWD"
+cd "$SEARCHPATH"
+
+argc="$#";
+module="$1"; shift
+case $argc in
+0|1)
+    # Include all Modules
+    for source_module in $(find modules -name '*.bm')
+    do
+        . "$source_module" || exit 3
+    done
+    if [ -z "$module" ]; then
+        . "modules/interface"
+    else
+        eval "${module}_interface"
+    fi
+    ;;
+*)
+    # Include supplied Module
+    . modules/"$module".bm || exit 3
+    action="$1"; shift
+    if [ "$action" ]; then
+        "$action" "$@"
+        RC=$?
+        if [ $RC -ne 0 ]; then
+            exit $RC
+        fi
+    fi
+    ;;
+esac
+cd "$BACKDIR"
+
+exit 0
+# exitcodes
+cat <<=  1>&2
+0: OK
+1: UID not root
+2: Usage (wrong syntax?)
+3: Module not found
+4: Module: bad sub/function
+=

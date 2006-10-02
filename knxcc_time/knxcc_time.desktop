@@ -1,0 +1,18 @@
+[Desktop Entry]
+Encoding=UTF-8
+Icon=clock
+Type=Application
+Exec=kanotix-su kcmshell knxcc_time
+
+X-KDE-SubstituteUID=true
+X-KDE-RootOnly=true
+X-KDE-Library=knxcc_time
+X-KDE-FactoryName=knxcc_time
+X-KDE-ParentApp=kcontrol
+
+Name=Time
+Name[de]=Uhrzeit
+Comment=Set Date and Time
+Comment[de]=Datum und Zeit einstellen
+
+Categories=Qt;KDE;X-KDE-settings-kanotix;

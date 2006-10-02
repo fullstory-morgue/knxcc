@@ -1,0 +1,1397 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>DisplayDialog</class>
+<author>Andreas Loibl &lt;andreas@andreas-loibl.de&gt;</author>
+<widget class="KCModule">
+    <property name="name">
+        <cstring>DisplayDialog</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>564</width>
+            <height>405</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Display</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
+        <widget class="QTabWidget" row="0" column="0">
+            <property name="name">
+                <cstring>mainTab</cstring>
+            </property>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>tab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Resol&amp;ution</string>
+                </attribute>
+                <vbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QButtonGroup">
+                        <property name="name">
+                            <cstring>resGroup</cstring>
+                        </property>
+                        <property name="title">
+                            <string>Resolution / Modelines</string>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QRadioButton" row="0" column="0">
+                                <property name="name">
+                                    <cstring>radioSelectRes</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>&amp;Select Resolution:</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+S</string>
+                                </property>
+                                <property name="checked">
+                                    <bool>true</bool>
+                                </property>
+                            </widget>
+                            <widget class="QRadioButton" row="1" column="0">
+                                <property name="name">
+                                    <cstring>radioUserdefRes</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Use user-defined Resolu&amp;tion:</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+T</string>
+                                </property>
+                            </widget>
+                            <spacer row="0" column="1">
+                                <property name="name">
+                                    <cstring>selectResSpacer</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>110</width>
+                                        <height>20</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                            <spacer row="1" column="1">
+                                <property name="name">
+                                    <cstring>userdefResSpacer</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>110</width>
+                                        <height>20</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                            <widget class="QComboBox" row="0" column="2">
+                                <item>
+                                    <property name="text">
+                                        <string>640x480</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>800x600</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>1024x768</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>1152x864</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>1280x1024</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>1400x1050</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>1600x1200</string>
+                                    </property>
+                                </item>
+                                <property name="name">
+                                    <cstring>selectResolution</cstring>
+                                </property>
+                                <property name="currentItem">
+                                    <number>2</number>
+                                </property>
+                            </widget>
+                            <widget class="QLineEdit" row="1" column="2">
+                                <property name="name">
+                                    <cstring>userdefResolution</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>false</bool>
+                                </property>
+                                <property name="text">
+                                    <string>1024x768</string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="3" column="0" rowspan="1" colspan="3">
+                                <property name="name">
+                                    <cstring>removeModelinesDescription</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>&lt;b&gt;Remove Modelines&lt;/b&gt;: (insert a short description here)</string>
+                                </property>
+                            </widget>
+                            <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="3">
+                                <property name="name">
+                                    <cstring>removeModelines</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Remove Modelines from X-Server-&amp;Configuration</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+C</string>
+                                </property>
+                            </widget>
+                            <widget class="Line" row="2" column="0" rowspan="1" colspan="3">
+                                <property name="name">
+                                    <cstring>line2</cstring>
+                                </property>
+                                <property name="frameShape">
+                                    <enum>HLine</enum>
+                                </property>
+                                <property name="frameShadow">
+                                    <enum>Sunken</enum>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <widget class="QGroupBox">
+                        <property name="name">
+                            <cstring>dpiSettingsGroup</cstring>
+                        </property>
+                        <property name="title">
+                            <string>DPI-Settings</string>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QSpinBox" row="0" column="0">
+                                <property name="name">
+                                    <cstring>dpiValue</cstring>
+                                </property>
+                                <property name="suffix">
+                                    <string> dpi</string>
+                                </property>
+                                <property name="maxValue">
+                                    <number>200</number>
+                                </property>
+                                <property name="minValue">
+                                    <number>10</number>
+                                </property>
+                                <property name="lineStep">
+                                    <number>1</number>
+                                </property>
+                                <property name="value">
+                                    <number>72</number>
+                                </property>
+                            </widget>
+                            <widget class="QSlider" row="0" column="1">
+                                <property name="name">
+                                    <cstring>dpiValueSlider</cstring>
+                                </property>
+                                <property name="minValue">
+                                    <number>10</number>
+                                </property>
+                                <property name="maxValue">
+                                    <number>200</number>
+                                </property>
+                                <property name="lineStep">
+                                    <number>1</number>
+                                </property>
+                                <property name="pageStep">
+                                    <number>1</number>
+                                </property>
+                                <property name="value">
+                                    <number>72</number>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property name="tickmarks">
+                                    <enum>NoMarks</enum>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <widget class="QGroupBox">
+                        <property name="name">
+                            <cstring>colorDepthGroup</cstring>
+                        </property>
+                        <property name="title">
+                            <string>Color-Depth</string>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QLabel" row="0" column="0">
+                                <property name="name">
+                                    <cstring>selectColorDepthLabel</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Default Color-Depth:</string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="1" column="0" rowspan="1" colspan="3">
+                                <property name="name">
+                                    <cstring>colorDepthRadeonNoteLabel</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>&lt;b&gt;Note:&lt;/b&gt; If you are using the ATI-Driver (fglrx) you can not change the Color-Depth (it has to be 24 bit then)</string>
+                                </property>
+                            </widget>
+                            <widget class="QComboBox" row="0" column="2">
+                                <item>
+                                    <property name="text">
+                                        <string>8 bit</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>15 bit</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>16 bit</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>24 bit</string>
+                                    </property>
+                                </item>
+                                <property name="name">
+                                    <cstring>selectColorDepth</cstring>
+                                </property>
+                                <property name="currentItem">
+                                    <number>3</number>
+                                </property>
+                            </widget>
+                            <spacer row="0" column="1">
+                                <property name="name">
+                                    <cstring>selectColorDepthSpacer</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>20</width>
+                                        <height>20</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                        </grid>
+                    </widget>
+                    <spacer>
+                        <property name="name">
+                            <cstring>resolutionSpacer</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>20</width>
+                                <height>20</height>
+                            </size>
+                        </property>
+                    </spacer>
+                </vbox>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>tab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Dr&amp;ivers</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <spacer row="1" column="0">
+                        <property name="name">
+                            <cstring>driversSpacer</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>21</width>
+                                <height>20</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QTabWidget" row="0" column="0">
+                        <property name="name">
+                            <cstring>driversTab</cstring>
+                        </property>
+                        <widget class="QWidget">
+                            <property name="name">
+                                <cstring>TabPage</cstring>
+                            </property>
+                            <attribute name="title">
+                                <string>&amp;Generic</string>
+                            </attribute>
+                            <grid>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QButtonGroup" row="1" column="0">
+                                    <property name="name">
+                                        <cstring>chDriverGroup</cstring>
+                                    </property>
+                                    <property name="title">
+                                        <string>Change Driver</string>
+                                    </property>
+                                    <grid>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="QRadioButton" row="0" column="0">
+                                            <property name="name">
+                                                <cstring>chDriverVesa</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>VE&amp;SA</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+S</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QRadioButton" row="0" column="1">
+                                            <property name="name">
+                                                <cstring>chDriverNv</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>n&amp;v</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+V</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QRadioButton" row="1" column="1">
+                                            <property name="name">
+                                                <cstring>chDriverAti</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>a&amp;ti</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+T</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QRadioButton" row="0" column="2">
+                                            <property name="name">
+                                                <cstring>chDriverNvidia</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>nv&amp;idia</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+I</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QRadioButton" row="1" column="2">
+                                            <property name="name">
+                                                <cstring>chDriverFglrx</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>fglrx</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QRadioButton" row="1" column="0">
+                                            <property name="name">
+                                                <cstring>chDriverFbdev</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>FBdev</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="Line" row="2" column="0" rowspan="1" colspan="3">
+                                            <property name="name">
+                                                <cstring>chDriverLine</cstring>
+                                            </property>
+                                            <property name="frameShape">
+                                                <enum>HLine</enum>
+                                            </property>
+                                            <property name="frameShadow">
+                                                <enum>Sunken</enum>
+                                            </property>
+                                            <property name="orientation">
+                                                <enum>Horizontal</enum>
+                                            </property>
+                                        </widget>
+                                        <widget class="QRadioButton" row="3" column="0" rowspan="1" colspan="3">
+                                            <property name="name">
+                                                <cstring>chDriverRedetect</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Redetect video &amp;card</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+C</string>
+                                            </property>
+                                        </widget>
+                                    </grid>
+                                </widget>
+                                <spacer row="2" column="0">
+                                    <property name="name">
+                                        <cstring>genericSpacer</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Vertical</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>21</width>
+                                            <height>60</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <widget class="QGroupBox" row="0" column="0">
+                                    <property name="name">
+                                        <cstring>driverGroup</cstring>
+                                    </property>
+                                    <property name="title">
+                                        <string>Driver</string>
+                                    </property>
+                                    <grid>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="QLabel" row="0" column="0">
+                                            <property name="name">
+                                                <cstring>driverUsingLabel</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Now using:</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QLineEdit" row="0" column="1">
+                                            <property name="name">
+                                                <cstring>driverUsing</cstring>
+                                            </property>
+                                            <property name="readOnly">
+                                                <bool>true</bool>
+                                            </property>
+                                        </widget>
+                                        <spacer row="0" column="2">
+                                            <property name="name">
+                                                <cstring>driverUsingSpacer</cstring>
+                                            </property>
+                                            <property name="orientation">
+                                                <enum>Horizontal</enum>
+                                            </property>
+                                            <property name="sizeType">
+                                                <enum>Expanding</enum>
+                                            </property>
+                                            <property name="sizeHint">
+                                                <size>
+                                                    <width>20</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                    </grid>
+                                </widget>
+                            </grid>
+                        </widget>
+                        <widget class="QWidget">
+                            <property name="name">
+                                <cstring>tab</cstring>
+                            </property>
+                            <attribute name="title">
+                                <string>N&amp;vidia (nvidia)</string>
+                            </attribute>
+                            <grid>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QButtonGroup" row="0" column="0">
+                                    <property name="name">
+                                        <cstring>nvidiaActionGroup</cstring>
+                                    </property>
+                                    <property name="title">
+                                        <string>Action</string>
+                                    </property>
+                                    <grid>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="QRadioButton" row="0" column="0">
+                                            <property name="name">
+                                                <cstring>nvidiaActionInstall</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>&amp;Install</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+I</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QRadioButton" row="0" column="1">
+                                            <property name="name">
+                                                <cstring>nvidiaActionReinstall</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Rein&amp;stall</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+S</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QRadioButton" row="0" column="2">
+                                            <property name="name">
+                                                <cstring>nvidiaActionRemove</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Remove</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string></string>
+                                            </property>
+                                        </widget>
+                                    </grid>
+                                </widget>
+                                <widget class="QButtonGroup" row="1" column="0">
+                                    <property name="name">
+                                        <cstring>nvidiaOptionGroup</cstring>
+                                    </property>
+                                    <property name="enabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="title">
+                                        <string>Options</string>
+                                    </property>
+                                    <vbox>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="QCheckBox">
+                                            <property name="name">
+                                                <cstring>nvidiaOptionComposite</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Enable &amp;Composite-Extension</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+C</string>
+                                            </property>
+                                        </widget>
+                                    </vbox>
+                                </widget>
+                                <spacer row="3" column="0">
+                                    <property name="name">
+                                        <cstring>nvidiaSpacer</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Vertical</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>21</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <widget class="QButtonGroup" row="2" column="0">
+                                    <property name="name">
+                                        <cstring>twinViewGroup</cstring>
+                                    </property>
+                                    <property name="enabled">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="title">
+                                        <string>Nvidia TwinView-Settings</string>
+                                    </property>
+                                    <grid>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="QLineEdit" row="2" column="4">
+                                            <property name="name">
+                                                <cstring>twinViewVRefresh</cstring>
+                                            </property>
+                                            <property name="enabled">
+                                                <bool>false</bool>
+                                            </property>
+                                            <property name="text">
+                                                <string>50.0-75.0</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QLabel" row="2" column="3">
+                                            <property name="name">
+                                                <cstring>twinViewVRefreshLabel</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>VertRefresh (Monitor 2):</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="Line" row="1" column="2" rowspan="2" colspan="1">
+                                            <property name="name">
+                                                <cstring>line4</cstring>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>30</width>
+                                                    <height>0</height>
+                                                </size>
+                                            </property>
+                                            <property name="frameShape">
+                                                <enum>VLine</enum>
+                                            </property>
+                                            <property name="frameShadow">
+                                                <enum>Sunken</enum>
+                                            </property>
+                                            <property name="orientation">
+                                                <enum>Vertical</enum>
+                                            </property>
+                                        </widget>
+                                        <widget class="QLineEdit" row="1" column="4">
+                                            <property name="name">
+                                                <cstring>twinViewHSync</cstring>
+                                            </property>
+                                            <property name="enabled">
+                                                <bool>false</bool>
+                                            </property>
+                                            <property name="text">
+                                                <string>28.0-96.0</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="Line" row="3" column="1" rowspan="1" colspan="4">
+                                            <property name="name">
+                                                <cstring>twinViewSpacerLine</cstring>
+                                            </property>
+                                            <property name="frameShape">
+                                                <enum>HLine</enum>
+                                            </property>
+                                            <property name="frameShadow">
+                                                <enum>Sunken</enum>
+                                            </property>
+                                            <property name="orientation">
+                                                <enum>Horizontal</enum>
+                                            </property>
+                                        </widget>
+                                        <widget class="QLineEdit" row="4" column="2" rowspan="1" colspan="3">
+                                            <property name="name">
+                                                <cstring>twinViewMetaModes</cstring>
+                                            </property>
+                                            <property name="enabled">
+                                                <bool>false</bool>
+                                            </property>
+                                            <property name="text">
+                                                <string>1024x768,1024x768;NULL,1024x768</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QLabel" row="1" column="3">
+                                            <property name="name">
+                                                <cstring>twinViewHSyncLabel</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>HorizSync (Monitor 2):</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QComboBox" row="2" column="1">
+                                            <item>
+                                                <property name="text">
+                                                    <string>RightOf</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>LeftOf</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Above</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Below</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Clone</string>
+                                                </property>
+                                            </item>
+                                            <property name="name">
+                                                <cstring>twinViewOrientation</cstring>
+                                            </property>
+                                            <property name="enabled">
+                                                <bool>false</bool>
+                                            </property>
+                                        </widget>
+                                        <widget class="QLabel" row="4" column="1">
+                                            <property name="name">
+                                                <cstring>twinViewMetaModesLabel</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>MetaModes:</string>
+                                            </property>
+                                        </widget>
+                                        <spacer row="1" column="0" rowspan="2" colspan="1">
+                                            <property name="name">
+                                                <cstring>driversSpacer_2</cstring>
+                                            </property>
+                                            <property name="orientation">
+                                                <enum>Horizontal</enum>
+                                            </property>
+                                            <property name="sizeType">
+                                                <enum>Fixed</enum>
+                                            </property>
+                                            <property name="sizeHint">
+                                                <size>
+                                                    <width>20</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                        <widget class="QLabel" row="1" column="1">
+                                            <property name="name">
+                                                <cstring>twinViewOrientationLabel</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Orientation:</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="5">
+                                            <property name="name">
+                                                <cstring>nvidiaOptionTwinView</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Enable T&amp;winView</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+W</string>
+                                            </property>
+                                        </widget>
+                                    </grid>
+                                </widget>
+                            </grid>
+                        </widget>
+                        <widget class="QWidget">
+                            <property name="name">
+                                <cstring>tab</cstring>
+                            </property>
+                            <attribute name="title">
+                                <string>A&amp;TI (fglrx)</string>
+                            </attribute>
+                            <grid>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QButtonGroup" row="0" column="0">
+                                    <property name="name">
+                                        <cstring>atiActionGroup</cstring>
+                                    </property>
+                                    <property name="title">
+                                        <string>Action</string>
+                                    </property>
+                                    <grid>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="QRadioButton" row="0" column="0">
+                                            <property name="name">
+                                                <cstring>atiActionInstall</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>&amp;Install</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+I</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QRadioButton" row="0" column="1">
+                                            <property name="name">
+                                                <cstring>atiActionReinstall</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Rein&amp;stall</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+S</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QRadioButton" row="0" column="2">
+                                            <property name="name">
+                                                <cstring>atiActionRemove</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Remove</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string></string>
+                                            </property>
+                                        </widget>
+                                    </grid>
+                                </widget>
+                                <widget class="QButtonGroup" row="1" column="0">
+                                    <property name="name">
+                                        <cstring>atiOptionGroup</cstring>
+                                    </property>
+                                    <property name="enabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="title">
+                                        <string>Options</string>
+                                    </property>
+                                    <grid>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="QCheckBox" row="0" column="0">
+                                            <property name="name">
+                                                <cstring>atiOptionRemoveModelines</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Remove Modelines</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string></string>
+                                            </property>
+                                        </widget>
+                                    </grid>
+                                </widget>
+                                <spacer row="2" column="0">
+                                    <property name="name">
+                                        <cstring>atiSpacer</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Vertical</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>21</width>
+                                            <height>40</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                            </grid>
+                        </widget>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>tab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Fo&amp;nts</string>
+                </attribute>
+                <vbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QGroupBox">
+                        <property name="name">
+                            <cstring>fixFontsGroup</cstring>
+                        </property>
+                        <property name="title">
+                            <string>Register Fonts</string>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QLabel" row="0" column="0">
+                                <property name="name">
+                                    <cstring>fixFontsDescription</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>&lt;b&gt;Register Fonts&lt;/b&gt;: (insert a short description here)</string>
+                                </property>
+                            </widget>
+                            <widget class="QCheckBox" row="1" column="0">
+                                <property name="name">
+                                    <cstring>fixFonts</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Re&amp;gister/Repair Fonts (fix-fonts)</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+G</string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <spacer>
+                        <property name="name">
+                            <cstring>fontsSpacer</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>20</width>
+                                <height>200</height>
+                            </size>
+                        </property>
+                    </spacer>
+                </vbox>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>tab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Xor&amp;g-Modules</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QButtonGroup" row="0" column="0">
+                        <property name="name">
+                            <cstring>buttonGroup8</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>false</bool>
+                        </property>
+                        <property name="title">
+                            <string>Add/Remove modules</string>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QRadioButton" row="0" column="0" rowspan="1" colspan="2">
+                                <property name="name">
+                                    <cstring>radioButton16</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Autodetect unused modules and remove &amp;them</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+T</string>
+                                </property>
+                            </widget>
+                            <widget class="QRadioButton" row="1" column="0" rowspan="1" colspan="2">
+                                <property name="name">
+                                    <cstring>radioButton16_2</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Add and remove modules manuall&amp;y:</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+Y</string>
+                                </property>
+                            </widget>
+                            <widget class="KActionSelector" row="2" column="1">
+                                <property name="name">
+                                    <cstring>kActionSelector1</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>false</bool>
+                                </property>
+                                <property name="availableLabel">
+                                    <string>A&amp;vailable:</string>
+                                </property>
+                                <property name="selectedLabel">
+                                    <string>In&amp;stalled:</string>
+                                </property>
+                                <property name="showUpDownButtons">
+                                    <bool>false</bool>
+                                </property>
+                            </widget>
+                            <spacer row="2" column="0">
+                                <property name="name">
+                                    <cstring>spacer12</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Fixed</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>21</width>
+                                        <height>21</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                        </grid>
+                    </widget>
+                </grid>
+            </widget>
+        </widget>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>dpiValueSlider</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>dpiValueSlider</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>dpiValue</receiver>
+        <slot>setValue(int)</slot>
+    </connection>
+    <connection>
+        <sender>dpiValue</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>dpiValueSlider</receiver>
+        <slot>setValue(int)</slot>
+    </connection>
+    <connection>
+        <sender>radioUserdefRes</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>userdefResolution</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>radioSelectRes</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>selectResolution</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>selectResolution</sender>
+        <signal>activated(const QString&amp;)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>userdefResolution</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>fixFonts</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>selectColorDepth</sender>
+        <signal>activated(const QString&amp;)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>nvidiaActionInstall</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>nvidiaOptionGroup</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>nvidiaActionReinstall</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>nvidiaOptionGroup</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>atiActionInstall</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>atiOptionGroup</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>atiActionReinstall</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>atiOptionGroup</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>atiOptionRemoveModelines</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>nvidiaOptionComposite</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>nvidiaActionInstall</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>nvidiaActionReinstall</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>nvidiaActionRemove</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>atiActionInstall</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>atiActionReinstall</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>atiActionRemove</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>chDriverVesa</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>chDriverFbdev</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>chDriverNv</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>chDriverAti</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>chDriverNvidia</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>chDriverFglrx</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>chDriverRedetect</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>removeModelines</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>twinViewHSync</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>twinViewVRefresh</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>twinViewMetaModes</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>nvidiaOptionTwinView</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>twinViewOrientation</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>nvidiaOptionTwinView</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>twinViewHSync</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>nvidiaOptionTwinView</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>twinViewVRefresh</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>nvidiaOptionTwinView</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>twinViewMetaModes</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>nvidiaOptionTwinView</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>twinViewOrientation</sender>
+        <signal>activated(const QString&amp;)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>radioButton16_2</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kActionSelector1</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>radioButton16</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>radioButton16_2</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>kActionSelector1</sender>
+        <signal>added(QListBoxItem*)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+    <connection>
+        <sender>kActionSelector1</sender>
+        <signal>removed(QListBoxItem*)</signal>
+        <receiver>DisplayDialog</receiver>
+        <slot>changed()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>mainTab</tabstop>
+    <tabstop>radioSelectRes</tabstop>
+    <tabstop>selectResolution</tabstop>
+    <tabstop>userdefResolution</tabstop>
+    <tabstop>removeModelines</tabstop>
+    <tabstop>dpiValue</tabstop>
+    <tabstop>dpiValueSlider</tabstop>
+    <tabstop>selectColorDepth</tabstop>
+    <tabstop>driversTab</tabstop>
+    <tabstop>driverUsing</tabstop>
+    <tabstop>chDriverVesa</tabstop>
+    <tabstop>chDriverNv</tabstop>
+    <tabstop>chDriverNvidia</tabstop>
+    <tabstop>chDriverFbdev</tabstop>
+    <tabstop>chDriverAti</tabstop>
+    <tabstop>chDriverFglrx</tabstop>
+    <tabstop>chDriverRedetect</tabstop>
+    <tabstop>nvidiaActionInstall</tabstop>
+    <tabstop>nvidiaActionReinstall</tabstop>
+    <tabstop>nvidiaActionRemove</tabstop>
+    <tabstop>nvidiaOptionComposite</tabstop>
+    <tabstop>nvidiaOptionTwinView</tabstop>
+    <tabstop>twinViewOrientation</tabstop>
+    <tabstop>twinViewHSync</tabstop>
+    <tabstop>twinViewVRefresh</tabstop>
+    <tabstop>twinViewMetaModes</tabstop>
+    <tabstop>atiActionInstall</tabstop>
+    <tabstop>atiActionReinstall</tabstop>
+    <tabstop>atiActionRemove</tabstop>
+    <tabstop>atiOptionRemoveModelines</tabstop>
+    <tabstop>fixFonts</tabstop>
+    <tabstop>radioButton16</tabstop>
+    <tabstop>radioButton16_2</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in implementation">kdialog.h</include>
+</includes>
+<layoutdefaults spacing="3" margin="6"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<includehints>
+    <includehint>kcmodule.h</includehint>
+    <includehint>kactionselector.h</includehint>
+</includehints>
+</UI>

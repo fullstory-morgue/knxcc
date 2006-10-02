@@ -1,0 +1,17 @@
+[Desktop Entry]
+Encoding=UTF-8
+Icon=package_system
+Type=Application
+Exec=kanotix-su kcmshell knxcc_server
+
+X-KDE-SubstituteUID=true
+X-KDE-RootOnly=true
+X-KDE-Library=knxcc_server
+X-KDE-FactoryName=knxcc_server
+X-KDE-ParentApp=kcontrol
+
+Name=Server
+Comment=Options for Servers
+Comment[de]=Server-Einstellungen
+
+Categories=Qt;KDE;X-KDE-settings-kanotix;

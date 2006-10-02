@@ -1,0 +1,871 @@
+#!/bin/bash
+# knxcc-module: display
+
+register_module display $"Display"
+
+# Display-Manager (default: kdm)
+DM="$(cat /etc/X11/default-display-manager 2>/dev/null)"
+DM="$(basename $DM 2>/dev/null)"
+[ -z "$DM" ] && DM=kdm
+
+X_CONF=XF86Config-4
+if which Xorg >/dev/null; then
+  [ -e /etc/X11/xorg.conf ] && X_CONF=xorg.conf
+fi
+
+function get_dpi_settings()
+{
+    dpi="$(xdpyinfo | sed -n 's/^.*\(.*\)x\1 dots.*$/\1/p')"
+    if [ -z "$dpi" ]; then
+        dpi="$( (sed -ne 's/^.*\/usr\/X11R6\/bin\/X -nolisten tcp.*-dpi \([^ ]*\).*$/\1/p' < /etc/kde3/kdm/Xservers; sed -ne 's/^.*ServerArgsLocal=-nolisten tcp.*-dpi \([^ ]*\).*$/\1/p' < /etc/kde3/kdm/kdmrc; echo 72) | head -n1)"
+        echo "$dpi"
+    else
+        echo "$dpi"
+    fi
+}
+
+function set_dpi_settings()
+{
+    if [ $1 -eq $(get_dpi_settings) ]; then
+        echo "DPI-Settings unchanged."
+        return 128
+    else
+        fix-dpi-kdm $1
+    fi
+}
+
+function get_resolution()
+{
+    xdpyinfo | sed -n 's/^.*dimensions:\s*\(.*\) pixels.*$/\1/p'
+}
+
+function set_resolution()
+{
+    if [ "$1" = "$(get_resolution)" ]; then
+        echo "Resolution unchanged."
+        return 128
+    else
+        XSCREEN="$1"
+        XMODULE="$(get_driver)"
+        # hack i810 vga modes
+        if [ "$XMODULE" == "i810" -a -x /usr/sbin/915resolution ]; then
+            if [[ $(915resolution -l 2>/dev/null) != *$XSCREEN* ]]; then
+                915resolution 5c ${XSCREEN/x*} ${XSCREEN#*x} &>/dev/null
+                
+                mkdir -p /etc/default/
+                rm -f /etc/default/915resolution
+                cat > /etc/default/915resolution <<EOF
+#
+# 915resolution default
+#
+# find free modes by  /usr/sbin/915resolution -l
+# and set it to MODE
+#
+MODE=5c
+
+#
+# and set resolutions for the mode.
+#
+XRESO=${XSCREEN/x*}
+YRESO=${XSCREEN#*x}
+EOF
+                if [ -x "/etc/init.d/915resolution" ]; then
+                    unset FROZEN
+                    [ -f /etc/frozen-rc.d ] && FROZEN=yes
+                    update-rc.d 915resolution defaults 12 >/dev/null
+                    unfreeze-rc.d
+                    [ -n "$FROZEN" ] && freeze-rc.d
+                fi
+            fi
+        fi
+        fix-res $1
+    fi
+}
+
+function get_colordepth()
+{
+    awk '/DefaultColorDepth/{print $2}' < /etc/X11/$X_CONF
+}
+
+function set_colordepth()
+{
+    if [ $1 -eq $(get_colordepth) ]; then
+        echo "DefaultColorDepth-Settings unchanged."
+        return 128
+    else
+        perl -pi -e "s/(DefaultColorDepth) [0-9]+/\1 $1/" /etc/X11/$X_CONF
+    fi
+}
+
+function get_vertrefresh()
+{
+    awk '{if($1=="VertRefresh"){print $4}}' /etc/X11/xorg.conf
+}
+
+function set_vertrefresh()
+{
+    perl -pi -e "s/^(\s*VertRefresh).*/\1 50 - $1/" /etc/X11/xorg.conf
+}
+
+function get_driver()
+{
+    # sed -n '/auto-generated/{N;p}' < /etc/X11/$X_CONF | awk '/Driver/{print $2}' | tr -d '"'
+    getSection "Device" | awk "(\$1==\"Driver\"){print \$2}" | sed -e 's/^"\(.*\)"$/\1/;'
+}
+
+function set_driver()
+{
+    [ -z "$1" ] && return 128
+    
+    shutdown_xserver
+    
+    olddriver="$(get_driver)"
+    newdriver="$1"
+    if [ "$newdriver" = "$olddriver" ]; then
+        echo "Driver unchanged."
+        return 128
+    else
+        if [ -f /etc/X11/$X_CONF.1st ]; then
+                rm /etc/X11/$X_CONF
+                mv /etc/X11/$X_CONF.1st /etc/X11/$X_CONF
+                # NOTE: the $olddriver is different from the value in $X_CONF now!
+        fi
+        
+        perl -pi -e 's/^[\s]*#*[\s]*Option\s*"Composite".*/#\tOption\t"Composite"\t"1"/' /etc/X11/$X_CONF
+        perl -pi -e 's/^[\s]*#*[\s]*Option\s*"RENDER".*/#\tOption\t"RENDER"\t"1"/' /etc/X11/$X_CONF
+        perl -pi -e "s/^[\s]*Driver\s*\"$(get_driver)\"/\tDriver      \"$newdriver\"/g;" /etc/X11/$X_CONF
+        
+        case $olddriver in
+        nvidia)
+            NOCHANGE_XSERVER=1 nvidia_remove "$newdriver"
+            ;;
+        fglrx)
+            NOCHANGE_XSERVER=1 radeon_remove "$newdriver"
+            ;;
+        esac
+    fi
+    
+    start_xserver
+    
+    return 0
+}
+
+function change_driver()
+{
+    [ -z "$1" ] && return 128
+    nohup knxcc display set_driver "$1"
+}
+
+function nvidia_driver_supported()
+{
+    UNSUPPORTED=1
+    CARDS=$(lspci -n|perl -e 'while(<>){(push(@cards,$_)) if (s/^.+?\s*0300\:\s+(.+?)\s+.*$/$1/)} print join(" ",@cards);')
+    for card in $CARDS; do
+     VENDOR=${card%:*}
+     DEVICE=${card#*:}
+     case $VENDOR in
+      10de|12d2)
+       case $DEVICE in
+        0008|0009|0010|0018|0019) UNSUPPORTED=1 ;;
+        0020|0028|0029|002c|002d|00a0|0100|0101|0103|0150|0151|0152|0153) LEGACY=1;UNSUPPORTED=0 ;;
+        0170) UNSUPPORTED=0 ;; # GeForce4 MX 460 workaround
+        *) UNSUPPORTED=0 ;;
+       esac
+       ;;
+     esac
+    done
+
+    if [ $UNSUPPORTED -eq 0 ]; then
+        echo "SUPPORTED"
+        return 0
+    else
+        echo "UNSUPPORTED"
+        return 128
+    fi
+}
+
+function radeon_driver_supported()
+{
+    UNSUPPORTED=1
+    CARDS=$(lspci -n|perl -e 'while(<>){(push(@cards,$_)) if (s/^.+?\s*0300\:\s+(.+?)\s+.*$/$1/)} print join(" ",@cards);')
+    for card in $CARDS; do
+     VENDOR=${card%:*}
+     DEVICE=${card#*:}
+     case $VENDOR in
+      1002)
+       case $DEVICE in
+        3150|3152|3154|3e50|3e54|4144|4146|4147|4148|4149|4150|4151|4152|4153|4154|4155|4242|4966|4967|4a48|4a49|4a4a|4a4b|4a4c|4a4d|4a4e|4a4f|4a50|4a54|4b48|4b49|4b4a|4b4b|4b4c|4c64|4c66|4c67|4e44|4e45|4e46|4e47|4e48|4e49|4e4a|4e4b|4e50|4e51|4e52|4e54|4e56|5148|514c|514d|5460|5461|5462|5464|5548|5549|554a|554b|554d|554e|554f|5550|5551|564a|564b|564f|5652|5653|5834|5835|5954|5955|5960|5961|5962|5964|5965|5974|5975|5a41|5a42|5a61|5a62|5b60|5b62|5b63|5b64|5b65|5c61|5c63|5d48|5d49|5d4a|5d4d|5d4f|5d50|5d52|5d57|5e48|5e4a|5e4b|5e4c|5e4d|5e4f|7100|7101|7102|7103|7104|7105|7106|7108|7109|710a|710b|710c|710e|710f|7140|7142|7144|7145|7146|7149|714a|714b|714c|714d|714e|7152|715e|7180|7181|7183|7186|7187|718b|718c|718d|7196|71c0|71c1|71c2|71c4|71c5|71c6|71ce|71d2|71d4|71d5|71d6|71da|71de|7240|7243|7244|7245|7246|7247|7248|7249|724a|724b|724c|724d|724e|724f|7834|7835|7941|7942) UNSUPPORTED=0 ;;
+        *) UNSUPPORTED=1 ;;
+       esac
+       ;;
+     esac
+    done
+
+    if [ $UNSUPPORTED -eq 0 ]; then
+        echo "SUPPORTED"
+        return 0
+    else
+        echo "UNSUPPORTED"
+        return 128
+    fi
+}
+
+function nvidia_used()
+{
+    if [ "$(get_driver)" = "nvidia" ]; then
+        echo "USED"
+        return 0
+    else
+        echo "NOT USED"
+        return 128
+    fi
+}
+
+function radeon_used()
+{
+    if [ "$(get_driver)" = "fglrx" ]; then
+        echo "USED"
+        return 0
+    else
+        echo "NOT USED"
+        return 128
+    fi
+}
+
+function nvidia_composite_used()
+{
+    if ! grep -i Option[[:space:]]*\"Composite\" /etc/X11/$X_CONF | egrep -qv ^\s*#; then
+        echo "NOT USED"
+        return 128
+    elif [ "$(eval echo $(grep -i Option[[:space:]]*\"Composite\" /etc/X11/$X_CONF) | cut -d\  -f3)" -eq 0 ]; then
+        echo "NOT USED"
+        return 128
+    else
+        echo "USED"
+        return 0
+    fi
+}
+
+function nvidia_driver_install()
+{
+    if nvidia_used; then
+        echo "NVidia is used already."
+        return 128
+    else
+        nohup knxcc display nvidia_install $1
+    fi
+}
+
+function nvidia_driver_reinstall()
+{
+    nohup knxcc display nvidia_install $1
+}
+
+function nvidia_install()
+{
+    shutdown_xserver
+    DISPLAY= install-nvidia-debian.sh $1 &>/dev/tty7
+    start_xserver
+}
+
+function nvidia_driver_remove()
+{
+    nohup knxcc display nvidia_remove
+}
+
+function nvidia_remove()
+{
+    shutdown_xserver
+    
+    newdriver="$1"
+    [ -z "$newdriver" ] && newdriver="nv"
+    
+    rm -f /usr/lib/libGL.*
+    rm -f /usr/lib/libGLcore.*
+    rm -f /usr/lib/libGLwrapper.*
+    rm -f /usr/lib/libnvidia-tls.*
+    rm -f /usr/lib/libnvidia-cfg.*
+    rm -f /usr/lib/tls/libGL.*
+    rm -f /usr/lib/tls/libGLcore.*
+    rm -f /usr/lib/tls/libGLwrapper.*
+    rm -f /usr/lib/tls/libnvidia-tls.*
+    rm -f /usr/X11R6/lib/libGL.*
+    rm -f /usr/X11R6/lib/libGLcore.*
+    rm -f /usr/X11R6/lib/libXvMCNVIDIA.*
+    rm -f /usr/X11R6/lib/libGLwrapper.*
+    rm -f /usr/X11R6/lib/tls/libGL.*
+    rm -f /usr/X11R6/lib/tls/libGLcore.*
+    rm -f /usr/X11R6/lib/tls/libXvMCNVIDIA.*
+    rm -f /usr/X11R6/lib/tls/libGLwrapper.*
+    rm -f /usr/X11R6/lib/modules/extensions/libGLcore.*
+    rm -f /usr/X11R6/lib/modules/extensions/libglx.*
+    rm -f /usr/X11R6/lib/modules/extensions/libGLwrapper.*
+    dpkg -l xlibmesa-gl|apt-get install --reinstall --yes xlibmesa-gl &>/dev/tty7
+    dpkg -l xlibmesa-gl-dev|apt-get install --reinstall --yes xlibmesa-gl-dev &>/dev/tty7
+    
+    rm -f /lib/modules/$(uname -r)/kernel/drivers/video/nvidia.*o
+    
+    set_driver "$newdriver"
+    
+    start_xserver
+}
+
+
+function radeon_driver_install()
+{
+    if radeon_used; then
+        echo "Radeon-Driver is used already."
+        return 128
+    else
+        nohup knxcc display radeon_install $1
+    fi
+}
+
+function radeon_driver_reinstall()
+{
+    nohup knxcc display radeon_install $1
+}
+
+function radeon_install()
+{
+    shutdown_xserver
+    INSTALLSCRIPT="/usr/local/bin/install-radeon-debian.sh"
+    [ ! -e "$INSTALLSCRIPT" ] && [ -x /usr/local/bin/install-fglrx-debian.sh ] && INSTALLSCRIPT="/usr/local/bin/install-fglrx-debian.sh"
+    DISPLAY= $INSTALLSCRIPT $1 &>/dev/tty7
+    start_xserver
+}
+
+function radeon_driver_remove()
+{
+    nohup knxcc display radeon_remove
+}
+
+function radeon_remove()
+{
+    shutdown_xserver
+    
+    newdriver="$1"
+    [ -z "$newdriver" ] && newdriver="ati"
+    
+    CPU=$(uname -m)
+    [ "$CPU" != "x86_64" ] && CPU="i386"
+    unset X86
+    [ "$CPU" == "x86_64" ] && X86=64
+    GL=/usr/X11R6/lib/libGL.so.1.2
+
+    dpkg --purge fglrx${X86}-4-3-0 &>/dev/null
+    dpkg --purge fglrx${X86}-6-8-0 &>/dev/null
+    dpkg --purge fglrx-glc22 &>/dev/null
+    dpkg --purge fglrx &>/dev/null
+    for package in $(dpkg-divert --list|grep "diversion of $GL"|awk '{print $7}'|grep -v -e fglrx-driver -e xorg-driver-fglrx); do
+        dpkg-divert --package $package --remove $GL
+    done
+    
+    if [ -e $GL.1st ]; then
+        rm -f $GL
+        mv $GL.1st $GL
+    fi
+    
+    OLD_FGLRX=$(COLUMNS=200 dpkg -l|awk '/fglrx/ {print $2}')
+    [ -n "$OLD_FGLRX" ] && dpkg --purge $OLD_FGLRX
+    
+    rm -f /lib/modules/$(uname -r)/misc/fglrx.*o
+    
+    set_driver "$newdriver"
+    
+    start_xserver
+}
+
+function redetect_driver()
+{
+    nohup knxcc display redetect
+}
+
+function redetect()
+{
+    shutdown_xserver
+    
+    eval "$(/usr/share/hwsetup-ng/hwsetup-xserver)"
+    if [ "$XMODULE" ]; then
+        NOCHANGE_XSERVER=1 set_driver "$XMODULE"
+    else
+        echo "Error: Could not detect video-card!" >&2
+    fi
+    
+    start_xserver
+}
+
+
+function restart_xserver()
+{
+    # nohup /etc/init.d/$DM restart
+    nohup knxcc display restart_x
+}
+
+function restart_x()
+{
+    /etc/init.d/$DM stop &>/dev/null
+    chvt 7 || chvt -t 7
+    /etc/init.d/$DM start &>/dev/null
+    xserver_fallback &>/dev/tty7
+}
+
+function xserver_fallback()
+{
+    . modules/dialog.bm
+    dlg --timeout 20 --defaultno --yesno $"If the X-Server did not start correctly please select <Yes> to start the Kanotix-Control-Center in textmode. Then you can change your settings and try it again.\n\nDo you want to start knxcc now?" 0 0
+    if (($?)); then
+        clear
+    else
+        knxcc
+    fi
+}
+
+function shutdown_xserver()
+{
+    [ "$NOCHANGE_XSERVER" ] && return 1
+    
+    # init 3 &>/dev/null
+    /etc/init.d/$DM stop &>/dev/null
+    chvt 7 || chvt -t 7
+    
+    rmmod nvidia &>/dev/null
+    rmmod radeon drm &>/dev/null
+    rmmod fglrx &>/dev/null
+}
+
+function start_xserver()
+{
+    [ "$NOCHANGE_XSERVER" ] && return 1
+    # chvt 1
+    # init 5 &>/dev/null
+    /etc/init.d/$DM start &>/dev/null
+    xserver_fallback
+}
+
+function remove_modelines()
+{
+    perl -pi -e 's/^.*Mode.ine.*\n?//g' /etc/X11/$X_CONF
+}
+
+function fix_fonts_konsole()
+{
+    if [ "$DISPLAY" ]; then
+        konsole -T "Fix-Fonts (Kanotix-Control-Center)" --nomenubar --notabbar -e fix-fonts
+    else
+        fix-fonts
+    fi
+}
+
+
+function addLineToSection()
+{
+    [ $# -ne 2 ] && return 1
+    Section="$1"
+    Line="$2"
+    
+    sedScript="$(cat <<ENDE
+    # search for Section
+    /^\s*Section "$Section"/!bc
+    :a
+    # get the next line and print it
+    n
+    /\s*EndSection/!ba
+    # insert line before EndSection
+    i\\$Line
+    :c
+    # print line and delete it
+    p
+    d
+ENDE
+)"
+
+    sed -e "$sedScript" < /etc/X11/$X_CONF > /etc/X11/$X_CONF.$$.tmp
+    if diff -q /etc/X11/$X_CONF /etc/X11/$X_CONF.$$.tmp &>/dev/null; then
+        rm /etc/X11/$X_CONF.$$.tmp
+        return 1
+    else
+        mv /etc/X11/$X_CONF.$$.tmp /etc/X11/$X_CONF
+        return 0
+    fi
+}
+
+function getSection()
+{
+    [ $# -ne 1 ] && return 1
+    Section="$1"
+    
+    sedScript="$(cat <<ENDE
+    # search for Section
+    /^\s*Section "$Section"/!bc
+    :a
+    # get the next line
+    N
+    /\s*EndSection/!ba
+    p
+    :c
+    d
+ENDE
+)"
+
+    sed -e "$sedScript" < /etc/X11/$X_CONF
+}
+
+function getOptionValueOfSection()
+{
+    [ $# -ne 2 ] && return 1
+    Val="$(getSection "$1" | awk "(\$1==\"Option\" && \$2==\"\\\"$2\\\"\"){print \$3}" | sed -e 's/^"\(.*\)"$/\1/;')"
+    [ -z "$Val" ] && return 1
+    echo "$Val"
+    return 0
+}
+
+function changeOptionInSection()
+{
+    [ $# -ne 3 ] && return 1
+    Section="$1"
+    Option="$2"
+    Value="$3"
+    
+    sedScript="$(cat <<ENDE
+    # search for Section
+    /^\s*Section "$Section"/!bc
+    :a
+    # get the next line and print it
+    s/^\(\s*Option\s*"$Option"\s\s*\).*$/\1"$Value"/
+    n
+    /\s*EndSection/!ba
+    :c
+    # print line and delete it
+    p
+    d
+ENDE
+)"
+
+    sed -e "$sedScript" < /etc/X11/$X_CONF > /etc/X11/$X_CONF.$$.tmp
+    if diff -q /etc/X11/$X_CONF /etc/X11/$X_CONF.$$.tmp &>/dev/null; then
+        rm /etc/X11/$X_CONF.$$.tmp
+        return 1
+    else
+        mv /etc/X11/$X_CONF.$$.tmp /etc/X11/$X_CONF
+        return 0
+    fi
+}
+
+function setOptionInSection()
+{
+    [ $# -ne 3 ] && return 1
+    Section="$1"
+    Option="$2"
+    Value="$3"
+    
+    if getOptionValueOfSection "$Section" "$Option" &>/dev/null; then
+        changeOptionInSection "$Section" "$Option" "$Value" && return 0
+    else
+        addLineToSection "$Section" "\tOption\t\"$Option\"\t\"$Value\""  && return 0
+    fi
+    
+    return 1
+}
+
+function insertOptionInSection()
+{
+    [ $# -ne 3 ] && return 1
+    Section="$1"
+    Option="$2"
+    Value="$3"
+    
+    if ! getOptionValueOfSection "$Section" "$Option" &>/dev/null; then
+        addLineToSection "$Section" "\tOption\t\"$Option\"\t\"$Value\""  && return 0
+    fi
+    
+    return 1
+}
+
+function twinview_used()
+{
+    val="$(getOptionValueOfSection Screen TwinView)"
+    case $val in
+    true|1)
+        echo "USED"
+        return 0
+        ;;
+    ""|false)
+        echo "NOT USED"
+        return 128
+        ;;
+    esac
+}
+
+function twinview_enable()
+{
+    setOptionInSection Screen TwinView "true"
+    # insertOptionInSection means that the Option-Line will be inserted only if the Option doesn't already exist
+    insertOptionInSection Screen TwinViewOrientation "RightOf"
+    insertOptionInSection Screen MetaModes "1024x768,1024x768;NULL,1024x768"
+    insertOptionInSection Screen SecondMonitorHorizSync "28.0-96.0"
+    insertOptionInSection Screen SecondMonitorVertRefresh "50.0-75.0"
+}
+
+function twinview_disable()
+{
+    # changeOptionInSection means that the Option-Line will be changed only if the Option does already exist
+    changeOptionInSection Screen TwinView "false"
+}
+
+function twinview_change()
+{
+    # changeOptionInSection means that the Option-Line will be changed only if the Option does already exist
+    changeOptionInSection Screen "$1" "$2"
+}
+
+function twinview_get_option()
+{
+    getOptionValueOfSection Screen "$1"
+}
+
+function display_interface()
+{
+   while true;
+   do
+      selection=$(dlg --menu $"Display" 0 0 0 \
+         "drivers" $"Change Display-Drivers" \
+         "resolution" $"Change Resolution" \
+         "vrefresh" $"Display refresh rate" \
+         "dpi" $"Change DPI-Settings" \
+         "cdepth" $"Change ColorDepth" \
+         "rmml" $"Remove Modelines" \
+         "twinview" $"TwinView-Settings" \
+         "fix-fonts" $"Register/Repair Fonts" \
+         "restartX" $"Restart X-Server" \
+         "return" $"Return to main Menu")
+      
+      case $selection in
+      drivers)
+         display_drivers_interface
+         ;;
+      resolution)
+         res="$(get_resolution)"
+         case $res in
+         640x480|800x600|1024x768|1152x864|1280x1024|1400x1050|1600x1200)
+            defaultres="$res"
+            ;;
+         *)
+            defaultres="custom"
+            ;;
+         esac
+         newres=$(dlg --default-item $defaultres --menu $"Select new Resolution" 0 0 0 640x480 "" 800x600 "" 1024x768 "" 1152x864 "" 1280x1024 "" 1400x1050 "" 1600x1200 "" custom "($res)")
+         # newres=$(dlg --inputbox $"Enter new Resolution:" 0 0 "$defaultres")
+         if [ $? -eq 0 ]; then
+	    if [ "$newres" = "custom" ]; then
+               newres=$(dlg --inputbox $"Enter new Resolution:" 0 0 "$res")
+	       [ $? -ne 0 ] && newres=
+	    fi
+	    if [ "$newres" ]; then
+               set_resolution $newres \
+               && dlg --msgbox $"The resolution has been changed successfully to $newres." \
+               || dlg --msgbox $"An Error occurred while changing the resolution to $newres!"
+	    fi
+         fi
+         ;;
+      vrefresh)
+         defaultrate="$(get_vertrefresh)" || defaultrate="75.0"
+         newrate=$(dlg --inputbox $"Enter new vertical refresh rate:" 0 0 "$defaultrate")
+         if [ $? -eq 0 ]; then
+            set_vertrefresh $newrate \
+            && dlg --msgbox $"The vertical refresh rate has been changed successfully to $newrate." \
+            || dlg --msgbox $"An Error occurred while changing the vertical refresh rate to $newrate!"
+         fi
+         ;;
+      dpi)
+         defaultdpi="$(get_dpi_settings)" || defaultdpi="72"
+         newdpi=$(dlg --inputbox $"Enter new DPI-Settings:" 0 0 "$defaultdpi")
+         if [ $? -eq 0 ]; then
+            set_dpi_settings $newdpi \
+            && dlg --msgbox $"The DPI-Settings have been changed successfully to $newdpi dpi." \
+            || dlg --msgbox $"An Error occurred while changing the DPI-Settings to $newdpi dpi!"
+         fi
+         ;;
+      cdepth)
+        cdepth="$(get_colordepth)"
+        case $cdepth in
+        8|15|16|24)
+            default=$cdepth
+            ;;
+        *)
+            default=16
+            ;;
+        esac
+        new=$(dlg --default-item $default --menu $"Default Color Depth" 0 0 0 8 bit 15 bit 16 bit 24 bit)
+        if [ $? -eq 0 ]; then
+            set_colordepth $new \
+            && dlg --msgbox $"The Colordepth has been changed successfully to $new." \
+            || dlg --msgbox $"An Error occurred while changing the Colordepth to $new"
+        fi
+        ;;
+      rmml)
+        dlg --yesno "Are you sure that you want to remove the Modelines?"
+        if [ $? -eq 0 ]; then
+            remove_modelines \
+            && dlg --msgbox $"The Modelines have been removed" \
+            || dlg --msgbox $"An Error occurred while removing the Modelines!"
+        fi
+        ;;
+      twinview)
+        if [ "$(get_driver)" = "nvidia" ]; then
+            display_twinview_interface
+        else
+            dlg --msgbox $"TwinView is only possible if you are using the 'nvidia'-Driver!"
+        fi
+        ;;
+      fix-fonts)
+        clear
+        fix-fonts
+        echo $"Press <Enter> to continue..."
+        read
+        ;;
+      restartX)
+        restart_xserver
+        ;;
+      return|"")
+        break
+        ;;
+      esac
+   done
+}
+
+function display_drivers_interface()
+{
+   while true;
+   do
+      selection=$(dlg --menu $"Display Drivers" 0 0 0 \
+         "redetect" $"Redetect video card" \
+         "vesa" $"Use 'vesa'-Driver" \
+         "fbdev" $"Use 'fbdev'-Driver" \
+         "nvidia" $"Install Nvidia-Drivers" \
+         "nv" $"Use 'nv'-Driver (no 3D-accel)" \
+         "fglrx" $"Install ATI-Radeon-Drivers" \
+         "ati" $"Use 'ati'-Driver (no 3D-accel)" \
+         "return" $"Return to main Menu")
+      
+      case $selection in
+      redetect)
+        clear
+        redetect_driver
+        driver="$(get_driver)"
+        dlg --msgbox $"The following Driver has been detected: $driver"
+        ;;
+      nvidia)
+        dlg --default-no --yesno $"Do you want to enable the 'Composite'-Extension (if possible)?"
+        if [ $? -eq 0 ]; then
+            nvidia_driver_reinstall -c
+        else
+            nvidia_driver_reinstall
+        fi
+        ;;
+      fglrx)
+        dlg --default-no --yesno $"Do you want to remove the Modelines while installing?"
+        if [ $? -eq 0 ]; then
+            radeon_driver_reinstall -r
+        else
+            radeon_driver_reinstall
+        fi
+        ;;
+      return|"")
+         break
+         ;;
+      *)
+        if [ "$selection" = "$(get_driver)" ]; then
+            dlg --msgbox $"The Driver $selection is used already."
+        else
+            NOCHANGE_XSERVER=1 set_driver "$selection" \
+            && dlg --msgbox $"The Driver has been changed to '$selection'." \
+            || dlg --msgbox $"An Error occurred while changing the Driver!"
+            dlg --yesno $"Do you want to restart the X-Server now?" && restart_xserver
+        fi
+         ;;
+      esac
+   done
+}
+
+function display_twinview_interface()
+{
+   while true;
+   do
+      selection=$(dlg --menu $"TwinView-Settings" 0 0 0 \
+         "enable" $"Enable TwinView" \
+         "disable" $"Disable TwinView" \
+         "orientation" $"Set orientation of Screens" \
+         "modes" $"Set MetaModes (advanced...)" \
+         "hsync" $"Set HorizSync of Monitor 2" \
+         "vrefresh" $"Set VertRefresh of Monitor 2" \
+         "return" $"Return to main Menu")
+      
+      case $selection in
+      enable)
+        setOptionInSection Screen TwinView "true"
+        # insertOptionInSection means that the Option-Line will be inserted only if the Option doesn't already exist
+        insertOptionInSection Screen TwinViewOrientation "RightOf"
+        insertOptionInSection Screen MetaModes "1024x768,1024x768;NULL,1024x768"
+        insertOptionInSection Screen SecondMonitorHorizSync "28.0-96.0"
+        insertOptionInSection Screen SecondMonitorVertRefresh "50.0-75.0"
+        dlg --msgbox $"TwinView has been enabled."
+        ;;
+      disable)
+        setOptionInSection Screen TwinView "false"
+        dlg --msgbox $"TwinView has been disabled."
+        ;;
+      orientation)
+        orientation="$(getOptionValueOfSection Screen TwinViewOrientation)"
+        case $orientation in
+        RightOf|LeftOf|Above|Below|Clone)
+           default="$orientation"
+           ;;
+        *)
+           default="RightOf"
+           ;;
+        esac
+        new=$(dlg --default-item $default --menu $"Select the Orientation of Monitor 2" 0 0 0 \
+        RightOf $"right of Monitor 1" \
+        LeftOf $"left of Monitor 1" \
+        Above $"above Monitor 1" \
+        Below $"below Monitor 1" \
+        Clone $"copy of Monitor 1")
+        if [ $? -eq 0 ]; then
+            setOptionInSection Screen TwinViewOrientation $new
+            dlg --msgbox $"The TwinView-Orientation has been changed to $new."
+        fi
+        ;;
+      modes)
+        metamodes="$(getOptionValueOfSection Screen MetaModes)"
+        [ -z "$metamodes" ] && metamodes="1024x768,1024x768;"
+        new="$(dlg --inputbox $"Set new MetaModes:" 0 0 "$metamodes")"
+        if [ $? -eq 0 ]; then
+            setOptionInSection Screen MetaModes "$metamodes"
+            dlg --msgbox $"The MetaModes have been changed."
+        fi
+        ;;
+      hsync)
+        hsync="$(getOptionValueOfSection Screen SecondMonitorHorizSync)"
+        [ -z "$hsync" ] && hsync="28.0-96.0"
+        new="$(dlg --inputbox $"Set HorizSync of Monitor 2:" 0 0 "$hsync")"
+        if [ $? -eq 0 ]; then
+            setOptionInSection Screen SecondMonitorHorizSync "$hsync"
+            dlg --msgbox $"The Settings have been changed."
+        fi
+        ;;
+      vrefresh)
+        vrefresh="$(getOptionValueOfSection Screen SecondMonitorVertRefresh)"
+        [ -z "$vrefresh" ] && vrefresh="50.0-75.0"
+        new="$(dlg --inputbox $"Set VertRefresh of Monitor 2:" 0 0 "$vrefresh")"
+        if [ $? -eq 0 ]; then
+            setOptionInSection Screen SecondMonitorVertRefresh "$vrefresh"
+            dlg --msgbox $"The Settings have been changed."
+        fi
+        ;;
+      return|"")
+         break
+         ;;
+      esac
+   done
+}

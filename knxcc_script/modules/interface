@@ -1,0 +1,25 @@
+# knxcc-interface
+
+if (($UID)); then
+    echo $"Error: You must be root to run this script!"
+    exit 1
+fi
+
+MODULES="$(echo "$MODULES" | sort)"
+
+command="dlg --menu \""$"Main Menu""\" 0 0 0 $MODULES
+         exit \""$"Exit""\""
+
+while true;
+do
+   selection=$(eval "$command")
+   
+   case $selection in
+      exit|"")
+         break;
+         ;;
+      *)
+         eval ${selection}_interface
+         ;;
+   esac
+done

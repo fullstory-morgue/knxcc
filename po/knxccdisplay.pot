@@ -1,0 +1,405 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-07-10 18:08+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: knxcc_display.cpp:376
+msgid ""
+"The XServer has to be restarted.\n"
+"\n"
+"Changes have been made that affect the XServer-configuration and thus it has "
+"to be restarted. Please save all work in progess, close other programs and "
+"press the Yes-button when ready.\n"
+"\n"
+"Do you want to restart the XServer now?"
+msgstr ""
+
+#: knxcc_display.cpp:381
+msgid "Restart XServer"
+msgstr ""
+
+#: rc.cpp:3 rc.cpp:279
+#, no-c-format
+msgid "Display"
+msgstr ""
+
+#: rc.cpp:6 rc.cpp:282
+#, no-c-format
+msgid "Resol&ution"
+msgstr ""
+
+#: rc.cpp:9 rc.cpp:285
+#, no-c-format
+msgid "Resolution / Modelines"
+msgstr ""
+
+#: rc.cpp:12 rc.cpp:288
+#, no-c-format
+msgid "&Select Resolution:"
+msgstr ""
+
+#: rc.cpp:15 rc.cpp:96 rc.cpp:150 rc.cpp:226 rc.cpp:291 rc.cpp:372 rc.cpp:426
+#: rc.cpp:502
+#, no-c-format
+msgid "Alt+S"
+msgstr ""
+
+#: rc.cpp:18 rc.cpp:294
+#, no-c-format
+msgid "Use user-defined Resolu&tion:"
+msgstr ""
+
+#: rc.cpp:21 rc.cpp:108 rc.cpp:264 rc.cpp:297 rc.cpp:384 rc.cpp:540
+#, no-c-format
+msgid "Alt+T"
+msgstr ""
+
+#: rc.cpp:24 rc.cpp:300
+#, no-c-format
+msgid "640x480"
+msgstr ""
+
+#: rc.cpp:27 rc.cpp:303
+#, no-c-format
+msgid "800x600"
+msgstr ""
+
+#: rc.cpp:30 rc.cpp:45 rc.cpp:306 rc.cpp:321
+#, no-c-format
+msgid "1024x768"
+msgstr ""
+
+#: rc.cpp:33 rc.cpp:309
+#, no-c-format
+msgid "1152x864"
+msgstr ""
+
+#: rc.cpp:36 rc.cpp:312
+#, no-c-format
+msgid "1280x1024"
+msgstr ""
+
+#: rc.cpp:39 rc.cpp:315
+#, no-c-format
+msgid "1400x1050"
+msgstr ""
+
+#: rc.cpp:42 rc.cpp:318
+#, no-c-format
+msgid "1600x1200"
+msgstr ""
+
+#: rc.cpp:48 rc.cpp:324
+#, no-c-format
+msgid "<b>Remove Modelines</b>: (insert a short description here)"
+msgstr ""
+
+#: rc.cpp:51 rc.cpp:327
+#, no-c-format
+msgid "Remove Modelines from X-Server-&Configuration"
+msgstr ""
+
+#: rc.cpp:54 rc.cpp:126 rc.cpp:163 rc.cpp:330 rc.cpp:402 rc.cpp:439
+#, no-c-format
+msgid "Alt+C"
+msgstr ""
+
+#: rc.cpp:57 rc.cpp:333
+#, no-c-format
+msgid "DPI-Settings"
+msgstr ""
+
+#: rc.cpp:60 rc.cpp:336
+#, no-c-format
+msgid " dpi"
+msgstr ""
+
+#: rc.cpp:63 rc.cpp:339
+#, no-c-format
+msgid "Color-Depth"
+msgstr ""
+
+#: rc.cpp:66 rc.cpp:342
+#, no-c-format
+msgid "Default Color-Depth:"
+msgstr ""
+
+#: rc.cpp:69 rc.cpp:345
+#, no-c-format
+msgid ""
+"<b>Note:</b> If you are using the ATI-Driver (fglrx) you can not change the "
+"Color-Depth (it has to be 24 bit then)"
+msgstr ""
+
+#: rc.cpp:72 rc.cpp:348
+#, no-c-format
+msgid "8 bit"
+msgstr ""
+
+#: rc.cpp:75 rc.cpp:351
+#, no-c-format
+msgid "15 bit"
+msgstr ""
+
+#: rc.cpp:78 rc.cpp:354
+#, no-c-format
+msgid "16 bit"
+msgstr ""
+
+#: rc.cpp:81 rc.cpp:357
+#, no-c-format
+msgid "24 bit"
+msgstr ""
+
+#: rc.cpp:84 rc.cpp:360
+#, no-c-format
+msgid "Dr&ivers"
+msgstr ""
+
+#: rc.cpp:87 rc.cpp:363
+#, no-c-format
+msgid "&Generic"
+msgstr ""
+
+#: rc.cpp:90 rc.cpp:366
+#, no-c-format
+msgid "Change Driver"
+msgstr ""
+
+#: rc.cpp:93 rc.cpp:369
+#, no-c-format
+msgid "VE&SA"
+msgstr ""
+
+#: rc.cpp:99 rc.cpp:375
+#, no-c-format
+msgid "n&v"
+msgstr ""
+
+#: rc.cpp:102 rc.cpp:378
+#, no-c-format
+msgid "Alt+V"
+msgstr ""
+
+#: rc.cpp:105 rc.cpp:381
+#, no-c-format
+msgid "a&ti"
+msgstr ""
+
+#: rc.cpp:111 rc.cpp:387
+#, no-c-format
+msgid "nv&idia"
+msgstr ""
+
+#: rc.cpp:114 rc.cpp:144 rc.cpp:220 rc.cpp:390 rc.cpp:420 rc.cpp:496
+#, no-c-format
+msgid "Alt+I"
+msgstr ""
+
+#: rc.cpp:117 rc.cpp:393
+#, no-c-format
+msgid "fglrx"
+msgstr ""
+
+#: rc.cpp:120 rc.cpp:396
+#, no-c-format
+msgid "FBdev"
+msgstr ""
+
+#: rc.cpp:123 rc.cpp:399
+#, no-c-format
+msgid "Redetect video &card"
+msgstr ""
+
+#: rc.cpp:129 rc.cpp:405
+#, no-c-format
+msgid "Driver"
+msgstr ""
+
+#: rc.cpp:132 rc.cpp:408
+#, no-c-format
+msgid "Now using:"
+msgstr ""
+
+#: rc.cpp:135 rc.cpp:411
+#, no-c-format
+msgid "N&vidia (nvidia)"
+msgstr ""
+
+#: rc.cpp:138 rc.cpp:214 rc.cpp:414 rc.cpp:490
+#, no-c-format
+msgid "Action"
+msgstr ""
+
+#: rc.cpp:141 rc.cpp:217 rc.cpp:417 rc.cpp:493
+#, no-c-format
+msgid "&Install"
+msgstr ""
+
+#: rc.cpp:147 rc.cpp:223 rc.cpp:423 rc.cpp:499
+#, no-c-format
+msgid "Rein&stall"
+msgstr ""
+
+#: rc.cpp:160 rc.cpp:436
+#, no-c-format
+msgid "Enable &Composite-Extension"
+msgstr ""
+
+#: rc.cpp:166 rc.cpp:442
+#, no-c-format
+msgid "Nvidia TwinView-Settings"
+msgstr ""
+
+#: rc.cpp:169 rc.cpp:445
+#, no-c-format
+msgid "50.0-75.0"
+msgstr ""
+
+#: rc.cpp:172 rc.cpp:448
+#, no-c-format
+msgid "VertRefresh (Monitor 2):"
+msgstr ""
+
+#: rc.cpp:175 rc.cpp:451
+#, no-c-format
+msgid "28.0-96.0"
+msgstr ""
+
+#: rc.cpp:178 rc.cpp:454
+#, no-c-format
+msgid "1024x768,1024x768;NULL,1024x768"
+msgstr ""
+
+#: rc.cpp:181 rc.cpp:457
+#, no-c-format
+msgid "HorizSync (Monitor 2):"
+msgstr ""
+
+#: rc.cpp:184 rc.cpp:460
+#, no-c-format
+msgid "RightOf"
+msgstr ""
+
+#: rc.cpp:187 rc.cpp:463
+#, no-c-format
+msgid "LeftOf"
+msgstr ""
+
+#: rc.cpp:190 rc.cpp:466
+#, no-c-format
+msgid "Above"
+msgstr ""
+
+#: rc.cpp:193 rc.cpp:469
+#, no-c-format
+msgid "Below"
+msgstr ""
+
+#: rc.cpp:196 rc.cpp:472
+#, no-c-format
+msgid "Clone"
+msgstr ""
+
+#: rc.cpp:199 rc.cpp:475
+#, no-c-format
+msgid "MetaModes:"
+msgstr ""
+
+#: rc.cpp:202 rc.cpp:478
+#, no-c-format
+msgid "Orientation:"
+msgstr ""
+
+#: rc.cpp:205 rc.cpp:481
+#, no-c-format
+msgid "Enable T&winView"
+msgstr ""
+
+#: rc.cpp:208 rc.cpp:484
+#, no-c-format
+msgid "Alt+W"
+msgstr ""
+
+#: rc.cpp:211 rc.cpp:487
+#, no-c-format
+msgid "A&TI (fglrx)"
+msgstr ""
+
+#: rc.cpp:236 rc.cpp:512
+#, no-c-format
+msgid "Remove Modelines"
+msgstr ""
+
+#: rc.cpp:240 rc.cpp:516
+#, no-c-format
+msgid "Fo&nts"
+msgstr ""
+
+#: rc.cpp:243 rc.cpp:519
+#, no-c-format
+msgid "Register Fonts"
+msgstr ""
+
+#: rc.cpp:246 rc.cpp:522
+#, no-c-format
+msgid "<b>Register Fonts</b>: (insert a short description here)"
+msgstr ""
+
+#: rc.cpp:249 rc.cpp:525
+#, no-c-format
+msgid "Re&gister/Repair Fonts (fix-fonts)"
+msgstr ""
+
+#: rc.cpp:252 rc.cpp:528
+#, no-c-format
+msgid "Alt+G"
+msgstr ""
+
+#: rc.cpp:255 rc.cpp:531
+#, no-c-format
+msgid "Xor&g-Modules"
+msgstr ""
+
+#: rc.cpp:258 rc.cpp:534
+#, no-c-format
+msgid "Add/Remove modules"
+msgstr ""
+
+#: rc.cpp:261 rc.cpp:537
+#, no-c-format
+msgid "Autodetect unused modules and remove &them"
+msgstr ""
+
+#: rc.cpp:267 rc.cpp:543
+#, no-c-format
+msgid "Add and remove modules manuall&y:"
+msgstr ""
+
+#: rc.cpp:270 rc.cpp:546
+#, no-c-format
+msgid "Alt+Y"
+msgstr ""
+
+#: rc.cpp:273 rc.cpp:549
+#, no-c-format
+msgid "A&vailable:"
+msgstr ""
+
+#: rc.cpp:276 rc.cpp:552
+#, no-c-format
+msgid "In&stalled:"
+msgstr ""

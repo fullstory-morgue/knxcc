@@ -1,0 +1,54 @@
+# knxcc-module: boot
+
+register_module boot $"Boot"
+
+services="$(perl modules/boot.pl)"
+
+function get_disabled_services()
+{
+    echo "$services" | egrep ^disabled | cut -d\  -f2
+}
+
+function get_active_services()
+{
+    echo "$services" | egrep ^active | cut -d\  -f2
+}
+
+function disable_service()
+{
+    update-rc.d -f $1 remove
+}
+
+function enable_service()
+{
+    update-rc.d -f $1 defaults
+}
+
+function boot_interface()
+{
+   while true;
+   do
+      selection=$(dlg --menu $"Boot" 0 0 0 \
+         "freeze" $"Freeze/Unfreeze Services" \
+         "services" $"Enable/Disable Services" \
+         "return" $"Return to main Menu")
+      
+      case $selection in
+      services)
+         rcconf
+         ;;
+      freeze)
+         if [ -e "/etc/frozen-rc.d" ]; then
+            dlg --yesno "The Services are frozen at the moment.\n\nDo you want to unfreeze them?" \
+            && unfreeze-rc.d
+         else
+            dlg --yesno "The Services are not frozen at the moment.\n\nDo you want to freeze them?" \
+            && freeze-rc.d
+         fi
+         ;;
+      return|"")
+         break
+         ;;
+      esac
+   done
+}

@@ -1,0 +1,384 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-11 19:15+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: modules/boot.bm:3 modules/boot.bm:31
+msgid "Boot"
+msgstr ""
+
+#: modules/boot.bm:32
+msgid "Freeze/Unfreeze Services"
+msgstr ""
+
+#: modules/boot.bm:33
+msgid "Enable/Disable Services"
+msgstr ""
+
+#: modules/boot.bm:34 modules/display.bm:629 modules/display.bm:722
+#: modules/display.bm:775 modules/info.bm:22 modules/network.bm:452
+#: modules/server.bm:25
+msgid "Return to main Menu"
+msgstr ""
+
+#: modules/display.bm:3 modules/display.bm:620
+msgid "Display"
+msgstr ""
+
+#: modules/display.bm:405
+msgid ""
+"If the X-Server did not start correctly please select <Yes> to start the "
+"Kanotix-Control-Center in textmode. Then you can change your settings and "
+"try it again.\\n\\nDo you want to start knxcc now?"
+msgstr ""
+
+#: modules/display.bm:621
+msgid "Change Display-Drivers"
+msgstr ""
+
+#: modules/display.bm:622
+msgid "Change Resolution"
+msgstr ""
+
+#: modules/display.bm:623
+msgid "Change DPI-Settings"
+msgstr ""
+
+#: modules/display.bm:624
+msgid "Change ColorDepth"
+msgstr ""
+
+#: modules/display.bm:625
+msgid "Remove Modelines"
+msgstr ""
+
+#: modules/display.bm:626 modules/display.bm:768
+msgid "TwinView-Settings"
+msgstr ""
+
+#: modules/display.bm:627
+msgid "Register/Repair Fonts"
+msgstr ""
+
+#: modules/display.bm:628
+msgid "Restart X-Server"
+msgstr ""
+
+#: modules/display.bm:645
+msgid "Select new Resolution"
+msgstr ""
+
+#: modules/display.bm:649
+#, sh-format
+msgid "The resolution has been changed successfully to $newres."
+msgstr ""
+
+#: modules/display.bm:650
+#, sh-format
+msgid "An Error occurred while changing the resolution to $newres!"
+msgstr ""
+
+#: modules/display.bm:655
+msgid "Enter new DPI-Settings:"
+msgstr ""
+
+#: modules/display.bm:658
+#, sh-format
+msgid "The DPI-Settings have been changed successfully to $newdpi dpi."
+msgstr ""
+
+#: modules/display.bm:659
+#, sh-format
+msgid "An Error occurred while changing the DPI-Settings to $newdpi dpi!"
+msgstr ""
+
+#: modules/display.bm:672
+msgid "Default Color Depth"
+msgstr ""
+
+#: modules/display.bm:675
+#, sh-format
+msgid "The Colordepth has been changed successfully to $new."
+msgstr ""
+
+#: modules/display.bm:676
+#, sh-format
+msgid "An Error occurred while changing the Colordepth to $new"
+msgstr ""
+
+#: modules/display.bm:683
+msgid "The Modelines have been removed"
+msgstr ""
+
+#: modules/display.bm:684
+msgid "An Error occurred while removing the Modelines!"
+msgstr ""
+
+#: modules/display.bm:691
+msgid "TwinView is only possible if you are using the 'nvidia'-Driver!"
+msgstr ""
+
+#: modules/display.bm:697 modules/info.bm:35
+msgid "Press <Enter> to continue..."
+msgstr ""
+
+#: modules/display.bm:714
+msgid "Display Drivers"
+msgstr ""
+
+#: modules/display.bm:715
+msgid "Redetect video card"
+msgstr ""
+
+#: modules/display.bm:716
+msgid "Use 'vesa'-Driver"
+msgstr ""
+
+#: modules/display.bm:717
+msgid "Use 'fbdev'-Driver"
+msgstr ""
+
+#: modules/display.bm:718
+msgid "Install Nvidia-Drivers"
+msgstr ""
+
+#: modules/display.bm:719
+msgid "Use 'nv'-Driver (no 3D-accel)"
+msgstr ""
+
+#: modules/display.bm:720
+msgid "Install ATI-Radeon-Drivers"
+msgstr ""
+
+#: modules/display.bm:721
+msgid "Use 'ati'-Driver (no 3D-accel)"
+msgstr ""
+
+#: modules/display.bm:729
+#, sh-format
+msgid "The following Driver has been detected: $driver"
+msgstr ""
+
+#: modules/display.bm:732
+msgid "Do you want to enable the 'Composite'-Extension (if possible)?"
+msgstr ""
+
+#: modules/display.bm:740
+msgid "Do you want to remove the Modelines while installing?"
+msgstr ""
+
+#: modules/display.bm:752
+#, sh-format
+msgid "The Driver $selection is used already."
+msgstr ""
+
+#: modules/display.bm:755
+#, sh-format
+msgid "The Driver has been changed to '$selection'."
+msgstr ""
+
+#: modules/display.bm:756
+msgid "An Error occurred while changing the Driver!"
+msgstr ""
+
+#: modules/display.bm:757
+msgid "Do you want to restart the X-Server now?"
+msgstr ""
+
+#: modules/display.bm:769
+msgid "Enable TwinView"
+msgstr ""
+
+#: modules/display.bm:770
+msgid "Disable TwinView"
+msgstr ""
+
+#: modules/display.bm:771
+msgid "Set orientation of Screens"
+msgstr ""
+
+#: modules/display.bm:772
+msgid "Set MetaModes (advanced...)"
+msgstr ""
+
+#: modules/display.bm:773
+msgid "Set HorizSync of Monitor 2"
+msgstr ""
+
+#: modules/display.bm:774
+msgid "Set VertRefresh of Monitor 2"
+msgstr ""
+
+#: modules/display.bm:785
+msgid "TwinView has been enabled."
+msgstr ""
+
+#: modules/display.bm:789
+msgid "TwinView has been disabled."
+msgstr ""
+
+#: modules/display.bm:801
+msgid "Select the Orientation of Monitor 2"
+msgstr ""
+
+#: modules/display.bm:802
+msgid "right of Monitor 1"
+msgstr ""
+
+#: modules/display.bm:803
+msgid "left of Monitor 1"
+msgstr ""
+
+#: modules/display.bm:804
+msgid "above Monitor 1"
+msgstr ""
+
+#: modules/display.bm:805
+msgid "below Monitor 1"
+msgstr ""
+
+#: modules/display.bm:806
+msgid "copy of Monitor 1"
+msgstr ""
+
+#: modules/display.bm:809
+#, sh-format
+msgid "The TwinView-Orientation has been changed to $new."
+msgstr ""
+
+#: modules/display.bm:818
+msgid "The MetaModes have been changed."
+msgstr ""
+
+#: modules/display.bm:827 modules/display.bm:836
+msgid "The Settings have been changed."
+msgstr ""
+
+#: modules/info.bm:3 modules/info.bm:19
+msgid "Infos"
+msgstr ""
+
+#: modules/info.bm:20
+msgid "Kanotix Version"
+msgstr ""
+
+#: modules/info.bm:21
+msgid "Infobash"
+msgstr ""
+
+#: modules/info.bm:29
+msgid "You are using "
+msgstr ""
+
+#: modules/network.bm:5 modules/network.bm:449
+msgid "Network"
+msgstr ""
+
+#: modules/network.bm:450
+msgid "Configure network interfaces"
+msgstr ""
+
+#: modules/network.bm:451
+msgid "Configure nameservers"
+msgstr ""
+
+#: modules/network.bm:458
+msgid "No supported network cards found."
+msgstr ""
+
+#: modules/network.bm:505
+msgid "Wireless settings"
+msgstr ""
+
+#: modules/network.bm:509
+msgid "Static"
+msgstr ""
+
+#: modules/network.bm:513
+msgid "DHCP"
+msgstr ""
+
+#: modules/network.bm:517
+msgid "(unconfigured)"
+msgstr ""
+
+#: modules/network.bm:553 modules/network.bm:569 modules/network.bm:585
+#: modules/network.bm:601
+#, sh-format
+msgid "Invalid IP: $value"
+msgstr ""
+
+#: modules/network.bm:680
+msgid ""
+"Invalid WEP-Key length, only\\n 5 (64 bit),\\n 13 (128 bit),\\n 16 (152 bit) "
+"or\\n 29 (256 bit) \\ncharacters are allowed!"
+msgstr ""
+
+#: modules/network.bm:715
+msgid "Invalid channel, only integer values allowed!"
+msgstr ""
+
+#: modules/network.bm:740
+msgid "Invalid format, e.g 2.412G is allowed!"
+msgstr ""
+
+#: modules/server.bm:3 modules/server.bm:22
+msgid "Server"
+msgstr ""
+
+#: modules/server.bm:23
+msgid "SSH-Server"
+msgstr ""
+
+#: modules/server.bm:24
+msgid "MySQL-Server"
+msgstr ""
+
+#: modules/server.bm:29 modules/server.bm:48
+msgid "Server:"
+msgstr ""
+
+#: modules/server.bm:30 modules/server.bm:49
+msgid "Start now"
+msgstr ""
+
+#: modules/server.bm:31 modules/server.bm:50
+msgid "Stop now"
+msgstr ""
+
+#: modules/server.bm:32 modules/server.bm:51
+msgid "Restart now"
+msgstr ""
+
+#: modules/server.bm:33 modules/server.bm:52
+msgid "Reload now"
+msgstr ""
+
+#: modules/server.bm:66
+msgid "Error: This module is not implemented yet!"
+msgstr ""
+
+#: modules/interface:4
+msgid "Error: You must be root to run this script!"
+msgstr ""
+
+#: modules/interface:10
+msgid "Main Menu"
+msgstr ""
+
+#: modules/interface:11
+msgid "Exit"
+msgstr ""
