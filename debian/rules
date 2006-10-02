@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/kde.mk
+
+DEB_MAKE_INSTALL_TARGET := install DESTDIR=$(CURDIR)/debian/tmp
+
+post-patches::
+	cp -f	/usr/share/misc/config.sub \
+		/usr/share/misc/config.guess admin/
+clean::
+	rm -f	admin/config.guess \
+		admin/config.sub
+

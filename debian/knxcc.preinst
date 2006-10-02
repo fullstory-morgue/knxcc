@@ -1,0 +1,49 @@
+#!/bin/sh
+
+cat_fat_warning () {
+cat <<EOT
+***********************************************************************
+
+WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING!
+WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING!
+
+Read:
+Please reinstall the "kdebase-data" package immediately after you see
+this message. Reinstall kdebase-data with the following command:
+	
+	apt-get --reinstall install kdebase-data
+
+Previous versions of knxcc replaced a file critical for future upgrades
+of KDE (/etc/xdg/menus/kde-settings.menu). After reinstalling
+kdebase-data, please double check this file exists, and is owned by
+kdebase-data with the following command:
+	
+	dpkg -S /etc/xdg/menus/kde-settings.menu
+
+To get the KControl plugin back, please install the knxcc-kde package.
+
+Apologies for the inconvenience.
+
+***********************************************************************
+EOT
+}
+
+rm_conf_and_warn_about_bad_upload () {
+	name="$1"
+	if [ -e "$name" ]; then
+		rm -f $name
+		cat_fat_warning
+	fi
+}
+
+case "$1" in
+	upgrade)
+	if dpkg --compare-versions "$2" lt "0.2.2-1"; then
+		rm_conf_and_warn_about_bad_upload /etc/xdg/menus/kde-settings.menu
+	fi
+	;;
+esac
+
+#DEBHELPER#
+
+exit 0

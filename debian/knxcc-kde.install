@@ -1,0 +1,7 @@
+debian/tmp/etc/xdg/menus/kde-applications-merged/kde-kanotix.menu
+debian/tmp/etc/xdg/menus/kde-applications-merged/kde-knxcc.menu
+debian/tmp/usr/lib/kde3
+debian/tmp/usr/share/applications
+debian/tmp/usr/share/applnk/Settings/kanotix-settings.directory
+debian/tmp/usr/share/desktop-directories
+debian/tmp/usr/share/desktop-directories/kde-settings-kanotix.directory
