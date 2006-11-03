@@ -4,7 +4,6 @@ Icon=knetworkconf
 Type=Application
 Exec=kanotix-su kcmshell knxcc_network
 
-X-KDE-SubstituteUID=true
 X-KDE-RootOnly=true
 X-KDE-Library=knxcc_network
 X-KDE-FactoryName=knxcc_network

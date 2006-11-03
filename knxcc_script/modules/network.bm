@@ -373,8 +373,8 @@ function get_iface_block()
 {
     iface=$1
     # $2 = ro ---> read-only
-    [ "$2" != "ro" ] && awk '/^\s*iface/{if($2=="'"$iface"'"){found=1}else{found=0}} {if(found){if(!done){print "'"$iface_block_sep"'\n"; done=1}}else{print}}END{if(!done){print "'"$iface_block_sep"'"}}' /etc/network/interfaces > $iface_temp
-    awk '/^\s*iface/{if($2=="'"$iface"'"){found=1}else{found=0}} {if(found){print; done=1}} END{if(!done){print "iface '$iface' inet manual"}}' /etc/network/interfaces | awk_escape | trim_lines
+    [ "$2" != "ro" ] && awk '/^\s*(iface|auto|allow-|mapping)/{if($1=="iface" && $2=="'"$iface"'"){found=1}else{found=0}} {if(found){if(!done){print "'"$iface_block_sep"'\n"; done=1}}else{print}}END{if(!done){print "'"$iface_block_sep"'"}}' /etc/network/interfaces > $iface_temp
+    awk '/^\s*(iface|auto|allow-|mapping)/{if($1=="iface" && $2=="'"$iface"'"){found=1}else{found=0}} {if(found){print; done=1}} END{if(!done){print "iface '$iface' inet manual"}}' /etc/network/interfaces | awk_escape | trim_lines
 }
 
 function change_iface_block()
@@ -404,9 +404,9 @@ function change_iface_block()
     --set)
         shift
         var="$1"
-        # value="$(echo "$2" | awk_escape)"
-        value="$2"
-        output="$( ( echo -e "\t"; echo "$var $value" ) | awk_escape)"
+        value="$(echo "$2" | awk_escape)"
+        # value="$2"
+        output="$( ( echo -n -e "\t"; echo "$var $value" ) | awk_escape)"
         awk '{if($1=="'$var'"){'"$grep_parameter"'{print}else{found=1; print "'"$output"'"}}else{print}}END{if(!found){print "'"$output"'"}}' 2>/dev/null
         ;;
     esac

@@ -4,7 +4,6 @@ Icon=clock
 Type=Application
 Exec=kanotix-su kcmshell knxcc_time
 
-X-KDE-SubstituteUID=true
 X-KDE-RootOnly=true
 X-KDE-Library=knxcc_time
 X-KDE-FactoryName=knxcc_time

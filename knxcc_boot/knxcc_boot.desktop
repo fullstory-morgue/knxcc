@@ -4,7 +4,6 @@ Icon=ksysv
 Type=Application
 Exec=kanotix-su kcmshell knxcc_boot
 
-X-KDE-SubstituteUID=true
 X-KDE-RootOnly=true
 X-KDE-Library=knxcc_boot
 X-KDE-FactoryName=knxcc_boot
