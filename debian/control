@@ -9,8 +9,8 @@ Standards-Version: 3.6.2
 
 Package: knxcc
 Architecture: all
-Depends: dialog, perl, infobash, fix-fonts, sysv-freeze, xbase-clients, kanotix-toolkit
-Recommends: knxcc-kde
+Depends: dialog, perl, infobash, fix-fonts, xbase-clients, kanotix-toolkit
+Recommends: knxcc-kde, sysv-freeze
 Description: KANOTIX-Control-Center
  Dialog based frontend for Kano's Scripts and other Settings.
 

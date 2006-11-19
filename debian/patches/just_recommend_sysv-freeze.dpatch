@@ -1,0 +1,70 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## just_recommend_sysv-freeze.dpatch by Stefan Lippers-Hollmann <s.l-h@gmx.de>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad trunk~/knxcc_boot/knxcc_boot.cpp trunk/knxcc_boot/knxcc_boot.cpp
+--- trunk~/knxcc_boot/knxcc_boot.cpp	2006-11-16 16:54:38.000000000 +0100
++++ trunk/knxcc_boot/knxcc_boot.cpp	2006-11-19 01:28:33.000000000 +0100
+@@ -62,13 +62,13 @@
+ 
+ void knxcc_boot::save(){
+     // Freeze
+-    if (freezeServices->isChecked() && ! QFile::exists("/etc/frozen-rc.d"))
++    if (freezeServices->isChecked() && ! QFile::exists("/etc/frozen-rc.d") && QFile::exists("/usr/sbin/freeze-rc.d"))
+     {
+         // execute freeze-rc.d
+         this->shell->setCommand("freeze-rc.d");
+         this->shell->start(true);
+     }
+-    else if(! freezeServices->isChecked() && QFile::exists("/etc/frozen-rc.d"))
++    else if(! freezeServices->isChecked() && QFile::exists("/etc/frozen-rc.d") && QFile::exists("/usr/sbin/unfreeze-rc.d"))
+     {
+         // execute unfreeze-rc.d
+         this->shell->setCommand("unfreeze-rc.d");
+diff -urNad trunk~/knxcc_script/modules/boot.bm trunk/knxcc_script/modules/boot.bm
+--- trunk~/knxcc_script/modules/boot.bm	2006-11-16 16:54:38.000000000 +0100
++++ trunk/knxcc_script/modules/boot.bm	2006-11-19 01:22:46.000000000 +0100
+@@ -28,10 +28,15 @@
+ {
+    while true;
+    do
+-      selection=$(dlg --menu $"Boot" 0 0 0 \
+-         "freeze" $"Freeze/Unfreeze Services" \
+-         "services" $"Enable/Disable Services" \
+-         "return" $"Return to main Menu")
++      if [ -x /usr/sbin/freeze-rc.d ] && [ -x /usr/sbin/unfreeze-rc.d ]; then
++         selection=$(dlg --menu $"Boot" 0 0 0 \
++            "freeze" $"Freeze/Unfreeze Services" \
++            "services" $"Enable/Disable Services" \
++            "return" $"Return to main Menu")
++      else
++         selection=$(dlg --menu $"Boot" 0 0 0 \
++            "return" $"Return to main Menu")
++      fi
+       
+       case $selection in
+       services)
+@@ -51,4 +56,4 @@
+          ;;
+       esac
+    done
+-}
+\ No newline at end of file
++}
+diff -urNad trunk~/knxcc_script/modules/display.bm trunk/knxcc_script/modules/display.bm
+--- trunk~/knxcc_script/modules/display.bm	2006-11-16 16:54:38.000000000 +0100
++++ trunk/knxcc_script/modules/display.bm	2006-11-19 01:24:45.000000000 +0100
+@@ -73,8 +73,8 @@
+                     unset FROZEN
+                     [ -f /etc/frozen-rc.d ] && FROZEN=yes
+                     update-rc.d 915resolution defaults 12 >/dev/null
+-                    unfreeze-rc.d
+-                    [ -n "$FROZEN" ] && freeze-rc.d
++                    [ -x /usr/sbin/unfreeze-rc.d ] && unfreeze-rc.d
++                    [ -n "$FROZEN" ] && [ -x /usr/sbin/freeze-rc.d ] && freeze-rc.d
+                 fi
+             fi
+         fi
