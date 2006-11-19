@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-11 19:15+0200\n"
+"POT-Creation-Date: 2006-11-14 12:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,16 +22,29 @@ msgid ""
 "<br><b>Interface description</b>: %6"
 msgstr ""
 
-#: knxcc_network_interface.cpp:285
+#: knxcc_network_interface.cpp:287
 msgid "WPA-key length error"
 msgstr ""
 
-#: knxcc_network_interface.cpp:285
+#: knxcc_network_interface.cpp:287
 msgid ""
 "Your WPA-key has to be at least 8 characters long.\n"
 "Do you want to correct your input?\n"
 "\n"
 "(if not WPA-encryption will be disabled)"
+msgstr ""
+
+#: knxcc_network.cpp:98
+msgid "Restart networking"
+msgstr ""
+
+#: knxcc_network.cpp:98
+msgid ""
+"Your settings are saved, the following interfaces have been changed:\n"
+"\n"
+"%1\n"
+"\n"
+"Do you want to restart them now?"
 msgstr ""
 
 #: rc.cpp:3 rc.cpp:221

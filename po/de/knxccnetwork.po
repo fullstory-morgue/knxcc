@@ -1,3 +1,4 @@
+# translation of knxccnetwork.po to German
 # translation of knxccnetwork.po to
 # Copyright (C) 2006
 # This file is distributed under the same license as the knxcc package.
@@ -7,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: knxccnetwork\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-11 19:15+0200\n"
-"PO-Revision-Date: 2006-09-11 19:53+0200\n"
+"POT-Creation-Date: 2006-11-14 12:45+0100\n"
+"PO-Revision-Date: 2006-11-15 17:21+0100\n"
 "Last-Translator: Andreas Loibl <andreas@andreas-loibl.de>\n"
-"Language-Team:  <de@li.org>\n"
+"Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.2\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: knxcc_network_interface.cpp:97
 msgid ""
@@ -24,11 +25,11 @@ msgstr ""
 "<b>%1</b> (%2, %3) Treiber: %4, MAC-Adresse: %5\n"
 "<br><b>Beschreibung</b>: %6"
 
-#: knxcc_network_interface.cpp:285
+#: knxcc_network_interface.cpp:287
 msgid "WPA-key length error"
 msgstr "Fehlerhafte Länge des WPA-Keys"
 
-#: knxcc_network_interface.cpp:285
+#: knxcc_network_interface.cpp:287
 msgid ""
 "Your WPA-key has to be at least 8 characters long.\n"
 "Do you want to correct your input?\n"
@@ -39,6 +40,24 @@ msgstr ""
 "Wollen Sie ihre Eingabe korrigieren?\n"
 "\n"
 "(falls nicht wird die WPA-Verschlüsselung deaktiviert)"
+
+#: knxcc_network.cpp:98
+msgid "Restart networking"
+msgstr "Netzwerkverbindung aktualisieren"
+
+#: knxcc_network.cpp:98
+msgid ""
+"Your settings are saved, the following interfaces have been changed:\n"
+"\n"
+"%1\n"
+"\n"
+"Do you want to restart them now?"
+msgstr ""
+"Ihre Einstellungen wurden gespeichert, die folgenden Netzwerkgeräte wurden verändert:\n"
+"\n"
+"%1\n"
+"\n"
+"Wollen Sie diese Geräte jetzt neu starten?"
 
 #: rc.cpp:3 rc.cpp:221
 #, no-c-format
@@ -76,11 +95,10 @@ msgid ""
 "connected."
 msgstr ""
 "<b>allow-hotplug</b>: Diese Option ist sinnvoll zusammen mit\n"
-"<b>ifplugd</b>, einem Daemon der ihr Netzwerkgerät automatisch "
-"konfiguriert wenn ein Kabel eingesteckt wurde und automatisch deaktiviert "
-"wenn das Kabel gezogen wird. Dies ist nützlich auf Laptops mit einer "
-"Onboard-Netzwerkkarte, welche nur dann aktiviert wird wenn wirklich "
-"ein Kabel angeschlossen ist."
+"<b>ifplugd</b>, einem Daemon der ihr Netzwerkgerät automatisch konfiguriert "
+"wenn ein Kabel eingesteckt wurde und automatisch deaktiviert wenn das Kabel "
+"gezogen wird. Dies ist nützlich auf Laptops mit einer Onboard-Netzwerkkarte, "
+"welche nur dann aktiviert wird wenn wirklich ein Kabel angeschlossen ist."
 
 #: rc.cpp:23 rc.cpp:241
 #, no-c-format
@@ -291,7 +309,12 @@ msgid ""
 "stored in /etc/network/interfaces and will be readable by any account on "
 "your system. So you may want to 'chmod 700 /etc/network/interfaces' if you "
 "select the <b>public</b> method..."
-msgstr "Wollen Sie den Verschlüsselungskey in einer eigenen, <b>nicht öffentlichen</b> Datei (/etc/network/wep.*; chmod 700) speichern? Falls nicht wird er in /etc/network/interfaces gespeichert und ist somit von jedem Benutzer an ihrem System lesbar. Sie könnten allerdings chmod 700 /etc/network/interfaces ausführen falls sie die <b>öffentliche</b> Methode wählen..."
+msgstr ""
+"Wollen Sie den Verschlüsselungskey in einer eigenen, <b>nicht öffentlichen</"
+"b> Datei (/etc/network/wep.*; chmod 700) speichern? Falls nicht wird er in /"
+"etc/network/interfaces gespeichert und ist somit von jedem Benutzer an ihrem "
+"System lesbar. Sie könnten allerdings chmod 700 /etc/network/interfaces "
+"ausführen falls sie die <b>öffentliche</b> Methode wählen..."
 
 #: rc.cpp:162 rc.cpp:380
 #, no-c-format
@@ -338,7 +361,9 @@ msgstr "256 bit"
 msgid ""
 "<b>Note:</b> WPA passphrase must be 8..63 characters! If you don't enter a "
 "key no wireless encryption will be used."
-msgstr "<b>Hinweis:</b> Der WPA-Schlüssel muss 8..63 Zeichen haben! Wenn Sie keinen Schlüssel eingeben wird die Verschlüsselung deaktiviert."
+msgstr ""
+"<b>Hinweis:</b> Der WPA-Schlüssel muss 8..63 Zeichen haben! Wenn Sie keinen "
+"Schlüssel eingeben wird die Verschlüsselung deaktiviert."
 
 #: rc.cpp:197 rc.cpp:415
 #, no-c-format

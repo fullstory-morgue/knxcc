@@ -280,30 +280,11 @@ function nvidia_remove()
     newdriver="$1"
     [ -z "$newdriver" ] && newdriver="nv"
     
-    rm -f /usr/lib/libGL.*
-    rm -f /usr/lib/libGLcore.*
-    rm -f /usr/lib/libGLwrapper.*
-    rm -f /usr/lib/libnvidia-tls.*
-    rm -f /usr/lib/libnvidia-cfg.*
-    rm -f /usr/lib/tls/libGL.*
-    rm -f /usr/lib/tls/libGLcore.*
-    rm -f /usr/lib/tls/libGLwrapper.*
-    rm -f /usr/lib/tls/libnvidia-tls.*
-    rm -f /usr/X11R6/lib/libGL.*
-    rm -f /usr/X11R6/lib/libGLcore.*
-    rm -f /usr/X11R6/lib/libXvMCNVIDIA.*
-    rm -f /usr/X11R6/lib/libGLwrapper.*
-    rm -f /usr/X11R6/lib/tls/libGL.*
-    rm -f /usr/X11R6/lib/tls/libGLcore.*
-    rm -f /usr/X11R6/lib/tls/libXvMCNVIDIA.*
-    rm -f /usr/X11R6/lib/tls/libGLwrapper.*
-    rm -f /usr/X11R6/lib/modules/extensions/libGLcore.*
-    rm -f /usr/X11R6/lib/modules/extensions/libglx.*
-    rm -f /usr/X11R6/lib/modules/extensions/libGLwrapper.*
-    dpkg -l xlibmesa-gl|apt-get install --reinstall --yes xlibmesa-gl &>/dev/tty7
-    dpkg -l xlibmesa-gl-dev|apt-get install --reinstall --yes xlibmesa-gl-dev &>/dev/tty7
+    if [ -x /usr/bin/nvidia-installer ]; then
+        /usr/bin/nvidia-installer --uninstall -s -N 2>/dev/null
+    fi
     
-    rm -f /lib/modules/$(uname -r)/kernel/drivers/video/nvidia.*o
+    echo libXvMC.so.1 > /etc/X11/XvMCConfig
     
     set_driver "$newdriver"
     
@@ -368,6 +349,12 @@ function radeon_remove()
     
     OLD_FGLRX=$(COLUMNS=200 dpkg -l|awk '/fglrx/ {print $2}')
     [ -n "$OLD_FGLRX" ] && dpkg --purge $OLD_FGLRX
+    OLD_FGLRX=$(COLUMNS=200 dpkg -l|awk '/fglrx/ {print $2}')
+    # use hack only if needed to fix packageing error
+    if [ -n "$OLD_FGLRX" ]; then
+        rm -f /usr/lib/fglrx/libGL.so.1.xlibmesa
+        dpkg --purge $OLD_FGLRX
+    fi
     
     rm -f /lib/modules/$(uname -r)/misc/fglrx.*o
     
@@ -463,8 +450,8 @@ function addLineToSection()
     [ $# -ne 2 ] && return 1
     Section="$1"
     Line="$2"
-    
-    sedScript="$(cat <<ENDE
+
+sedScript="$(cat <<ENDE
     # search for Section
     /^\s*Section "$Section"/!bc
     :a
@@ -480,12 +467,13 @@ function addLineToSection()
 ENDE
 )"
 
-    sed -e "$sedScript" < /etc/X11/$X_CONF > /etc/X11/$X_CONF.$$.tmp
-    if diff -q /etc/X11/$X_CONF /etc/X11/$X_CONF.$$.tmp &>/dev/null; then
-        rm /etc/X11/$X_CONF.$$.tmp
+    TMPFILE="$(mktemp -p /tmp/ knxcc.xconf-XXXXXXXXXX)"
+    sed -e "$sedScript" < "/etc/X11/$X_CONF" > "$TMPFILE"
+    if diff -q "/etc/X11/$X_CONF" "$TMPFILE" &>/dev/null; then
+        rm "$TMPFILE"
         return 1
     else
-        mv /etc/X11/$X_CONF.$$.tmp /etc/X11/$X_CONF
+        mv "$TMPFILE" "/etc/X11/$X_CONF"
         return 0
     fi
 }
@@ -495,7 +483,7 @@ function getSection()
     [ $# -ne 1 ] && return 1
     Section="$1"
     
-    sedScript="$(cat <<ENDE
+sedScript="$(cat <<ENDE
     # search for Section
     /^\s*Section "$Section"/!bc
     :a
@@ -527,7 +515,7 @@ function changeOptionInSection()
     Option="$2"
     Value="$3"
     
-    sedScript="$(cat <<ENDE
+sedScript="$(cat <<ENDE
     # search for Section
     /^\s*Section "$Section"/!bc
     :a
@@ -542,12 +530,13 @@ function changeOptionInSection()
 ENDE
 )"
 
-    sed -e "$sedScript" < /etc/X11/$X_CONF > /etc/X11/$X_CONF.$$.tmp
-    if diff -q /etc/X11/$X_CONF /etc/X11/$X_CONF.$$.tmp &>/dev/null; then
-        rm /etc/X11/$X_CONF.$$.tmp
+    TMPFILE="$(mktemp -p /tmp/ knxcc.xconf-XXXXXXXXXX)"
+    sed -e "$sedScript" < "/etc/X11/$X_CONF" > "$TMPFILE"
+    if diff -q "/etc/X11/$X_CONF" "$TMPFILE" &>/dev/null; then
+        rm "$TMPFILE"
         return 1
     else
-        mv /etc/X11/$X_CONF.$$.tmp /etc/X11/$X_CONF
+        mv "$TMPFILE" "/etc/X11/$X_CONF"
         return 0
     fi
 }

@@ -1,3 +1,4 @@
+# translation of knxccscript.po to German
 # translation of knxccscript.po to
 # Copyright (C) 2006
 # This file is distributed under the same license as the knxcc package.
@@ -7,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: knxccscript\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-11 19:15+0200\n"
-"PO-Revision-Date: 2006-09-11 19:18+0200\n"
+"POT-Creation-Date: 2006-11-14 12:45+0100\n"
+"PO-Revision-Date: 2006-11-15 17:18+0100\n"
 "Last-Translator: Andreas Loibl <andreas@andreas-loibl.de>\n"
-"Language-Team:  <de@li.org>\n"
+"Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.2\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: modules/boot.bm:3 modules/boot.bm:31
 msgid "Boot"
@@ -28,17 +29,18 @@ msgstr "Systemdienste einfrieren/auftauen"
 msgid "Enable/Disable Services"
 msgstr "Systemdienste aktivieren/deaktivieren"
 
-#: modules/boot.bm:34 modules/display.bm:629 modules/display.bm:722
-#: modules/display.bm:775 modules/info.bm:22 modules/network.bm:452
+#: modules/boot.bm:34 modules/display.bm:630 modules/display.bm:738
+#: modules/display.bm:791 modules/info.bm:22 modules/network.bm:452
+#: modules/network.bm:470 modules/network.bm:501 modules/network.bm:630
 #: modules/server.bm:25
 msgid "Return to main Menu"
 msgstr "Zurück zum Hauptmenü"
 
-#: modules/display.bm:3 modules/display.bm:620
+#: modules/display.bm:4 modules/display.bm:620
 msgid "Display"
 msgstr "Anzeige"
 
-#: modules/display.bm:405
+#: modules/display.bm:403
 msgid ""
 "If the X-Server did not start correctly please select <Yes> to start the "
 "Kanotix-Control-Center in textmode. Then you can change your settings and "
@@ -58,222 +60,256 @@ msgid "Change Resolution"
 msgstr "Auflösung ändern"
 
 #: modules/display.bm:623
+msgid "Display refresh rate"
+msgstr "Bildwiederholfrequenz"
+
+#: modules/display.bm:624
 msgid "Change DPI-Settings"
 msgstr "DPI-Einstellungen ändern"
 
-#: modules/display.bm:624
+#: modules/display.bm:625
 msgid "Change ColorDepth"
 msgstr "Farbtiefe ändern"
 
-#: modules/display.bm:625
+#: modules/display.bm:626
 msgid "Remove Modelines"
 msgstr "Modelines entfernen"
 
-#: modules/display.bm:626 modules/display.bm:768
+#: modules/display.bm:627 modules/display.bm:784
 msgid "TwinView-Settings"
 msgstr "TwinView-Einstellungen ändern"
 
-#: modules/display.bm:627
+#: modules/display.bm:628
 msgid "Register/Repair Fonts"
 msgstr "Schriften registrieren/reparieren"
 
-#: modules/display.bm:628
+#: modules/display.bm:629
 msgid "Restart X-Server"
 msgstr "X-Server neu starten"
 
-#: modules/display.bm:645
+#: modules/display.bm:646
 msgid "Select new Resolution"
 msgstr "Neue Auflösung auswählen"
 
-#: modules/display.bm:649
+#: modules/display.bm:650
+msgid "Enter new Resolution:"
+msgstr "Neue Auflösung eingeben:"
+
+#: modules/display.bm:655
 #, sh-format
 msgid "The resolution has been changed successfully to $newres."
 msgstr "Die Auflösung wurde erfolgreich auf $newres eingestellt."
 
-#: modules/display.bm:650
+#: modules/display.bm:656
 #, sh-format
 msgid "An Error occurred while changing the resolution to $newres!"
 msgstr "Während dem Ändern der Auflösung auf $newres ist ein Fehler aufgetreten!"
 
-#: modules/display.bm:655
+#: modules/display.bm:662
+msgid "Enter new vertical refresh rate:"
+msgstr "Neue Bildwiederholfrequenz eingeben:"
+
+#: modules/display.bm:665
+#, sh-format
+msgid "The vertical refresh rate has been changed successfully to $newrate."
+msgstr "Die Bildwiederholfrequenz wurde erfolgreich auf $newrate eingestellt."
+
+#: modules/display.bm:666
+#, sh-format
+msgid "An Error occurred while changing the vertical refresh rate to $newrate!"
+msgstr "Während dem Ändern der Bildwiederholfrequenz auf $newrate ist ein Fehler aufgetreten!"
+
+#: modules/display.bm:671
 msgid "Enter new DPI-Settings:"
 msgstr "Neue DPI-Einstellungen eingeben:"
 
-#: modules/display.bm:658
+#: modules/display.bm:674
 #, sh-format
 msgid "The DPI-Settings have been changed successfully to $newdpi dpi."
 msgstr "Die DPI-Einstellungen wurden erfolgreich auf $newdpi dpi eingestellt."
 
-#: modules/display.bm:659
+#: modules/display.bm:675
 #, sh-format
 msgid "An Error occurred while changing the DPI-Settings to $newdpi dpi!"
 msgstr ""
 "Während dem Ändern der DPI-Einstellungen auf $newdpi dpi ist ein Fehler "
 "aufgetreten!"
 
-#: modules/display.bm:672
+#: modules/display.bm:688
 msgid "Default Color Depth"
 msgstr "Standard Farbtiefe"
 
-#: modules/display.bm:675
+#: modules/display.bm:691
 #, sh-format
 msgid "The Colordepth has been changed successfully to $new."
 msgstr "Die Farbtiefe wurde erfolgreich auf $new geändert."
 
-#: modules/display.bm:676
+#: modules/display.bm:692
 #, sh-format
 msgid "An Error occurred while changing the Colordepth to $new"
 msgstr "Während dem Ändern der Farbtiefe auf $new ist ein Fehler aufgetreten!"
 
-#: modules/display.bm:683
+#: modules/display.bm:699
 msgid "The Modelines have been removed"
 msgstr "Die Modelines wurden gelöscht."
 
-#: modules/display.bm:684
+#: modules/display.bm:700
 msgid "An Error occurred while removing the Modelines!"
 msgstr "Während dem Löschen der Modelines ist ein Fehler aufgetreten!"
 
-#: modules/display.bm:691
+#: modules/display.bm:707
 msgid "TwinView is only possible if you are using the 'nvidia'-Driver!"
 msgstr "TwinView ist nur möglich wenn Sie den 'nvidia'-Treiber verwenden!"
 
-#: modules/display.bm:697 modules/info.bm:35
+#: modules/display.bm:713 modules/info.bm:35
 msgid "Press <Enter> to continue..."
 msgstr "Drücken Sie <Enter> um fortzufahren..."
 
-#: modules/display.bm:714
+#: modules/display.bm:730
 msgid "Display Drivers"
 msgstr "Grafiktreiber"
 
-#: modules/display.bm:715
+#: modules/display.bm:731
 msgid "Redetect video card"
 msgstr "Grafikkarte neu erkennen"
 
-#: modules/display.bm:716
+#: modules/display.bm:732
 msgid "Use 'vesa'-Driver"
 msgstr "'vesa'-Treiber verwenden"
 
-#: modules/display.bm:717
+#: modules/display.bm:733
 msgid "Use 'fbdev'-Driver"
 msgstr "'fbdev'-Treiber verwenden"
 
-#: modules/display.bm:718
+#: modules/display.bm:734
 msgid "Install Nvidia-Drivers"
 msgstr "Nvidia-Treiber installieren"
 
-#: modules/display.bm:719
+#: modules/display.bm:735
 msgid "Use 'nv'-Driver (no 3D-accel)"
 msgstr "'nv'-Treiber verwenden (keine 3D-Beschl.)"
 
-#: modules/display.bm:720
+#: modules/display.bm:736
 msgid "Install ATI-Radeon-Drivers"
 msgstr "ATI-Treiber installieren"
 
-#: modules/display.bm:721
+#: modules/display.bm:737
 msgid "Use 'ati'-Driver (no 3D-accel)"
 msgstr "'ati'-Treiber verwenden (keine 3D-Beschl.)"
 
-#: modules/display.bm:729
+#: modules/display.bm:745
 #, sh-format
 msgid "The following Driver has been detected: $driver"
 msgstr "Der folgende Treiber wurde erkannt: $driver"
 
-#: modules/display.bm:732
+#: modules/display.bm:748
 msgid "Do you want to enable the 'Composite'-Extension (if possible)?"
 msgstr ""
 "Wollen Sie die Composite-Erweiterung aktivieren (wenn von der Hardware "
 "unterstützt)?"
 
-#: modules/display.bm:740
+#: modules/display.bm:756
 msgid "Do you want to remove the Modelines while installing?"
 msgstr "Wollen Sie die Modelines beim Installieren löschen?"
 
-#: modules/display.bm:752
+#: modules/display.bm:768
 #, sh-format
 msgid "The Driver $selection is used already."
 msgstr "Der Treiber $selection wird bereits verwendet."
 
-#: modules/display.bm:755
+#: modules/display.bm:771
 #, sh-format
 msgid "The Driver has been changed to '$selection'."
 msgstr "Der Treiber wurde auf '$selection' geändert."
 
-#: modules/display.bm:756
+#: modules/display.bm:772
 msgid "An Error occurred while changing the Driver!"
 msgstr "Während dem Ändern des Treibers ist ein Fehler aufgetreten!"
 
-#: modules/display.bm:757
+#: modules/display.bm:773
 msgid "Do you want to restart the X-Server now?"
 msgstr "Wollen Sie den X-Server jetzt neu starten?"
 
-#: modules/display.bm:769
+#: modules/display.bm:785
 msgid "Enable TwinView"
 msgstr "TwinView aktivieren"
 
-#: modules/display.bm:770
+#: modules/display.bm:786
 msgid "Disable TwinView"
 msgstr "TwinView deaktivieren"
 
-#: modules/display.bm:771
+#: modules/display.bm:787
 msgid "Set orientation of Screens"
 msgstr "Ausrichtung der Bildschirme einstellen"
 
-#: modules/display.bm:772
+#: modules/display.bm:788
 msgid "Set MetaModes (advanced...)"
 msgstr "MetaModes einstellen (erweitert...)"
 
-#: modules/display.bm:773
+#: modules/display.bm:789
 msgid "Set HorizSync of Monitor 2"
 msgstr "HorizSync (Monitor 2) einstellen"
 
-#: modules/display.bm:774
+#: modules/display.bm:790
 msgid "Set VertRefresh of Monitor 2"
 msgstr "VertRefresh (Monitor 2) einstellen"
 
-#: modules/display.bm:785
+#: modules/display.bm:801
 msgid "TwinView has been enabled."
 msgstr "TwinView wurde aktiviert."
 
-#: modules/display.bm:789
+#: modules/display.bm:805
 msgid "TwinView has been disabled."
 msgstr "TwinView wurde deaktiviert."
 
-#: modules/display.bm:801
+#: modules/display.bm:817
 msgid "Select the Orientation of Monitor 2"
 msgstr "Bitte die Ausrichtung von Monitor 2 wählen"
 
-#: modules/display.bm:802
+#: modules/display.bm:818
 msgid "right of Monitor 1"
 msgstr "rechts von Monitor 1"
 
-#: modules/display.bm:803
+#: modules/display.bm:819
 msgid "left of Monitor 1"
 msgstr "links von Monitor 1"
 
-#: modules/display.bm:804
+#: modules/display.bm:820
 msgid "above Monitor 1"
 msgstr "über Monitor 1"
 
-#: modules/display.bm:805
+#: modules/display.bm:821
 msgid "below Monitor 1"
 msgstr "unter Monitor 1"
 
-#: modules/display.bm:806
+#: modules/display.bm:822
 msgid "copy of Monitor 1"
 msgstr "Kopie von Monitor 1"
 
-#: modules/display.bm:809
+#: modules/display.bm:825
 #, sh-format
 msgid "The TwinView-Orientation has been changed to $new."
 msgstr "Die TwinView-Ausrichtung wurde auf $new geändert."
 
-#: modules/display.bm:818
+#: modules/display.bm:831
+msgid "Set new MetaModes:"
+msgstr "Neue MetaModes eingeben:"
+
+#: modules/display.bm:834
 msgid "The MetaModes have been changed."
 msgstr "Die MetaModes wurden geändert."
 
-#: modules/display.bm:827 modules/display.bm:836
+#: modules/display.bm:840
+msgid "Set HorizSync of Monitor 2:"
+msgstr "HorizSync (Monitor 2) einstellen:"
+
+#: modules/display.bm:843 modules/display.bm:852
 msgid "The Settings have been changed."
 msgstr "Die Einstellungen wurden geändert."
+
+#: modules/display.bm:849
+msgid "Set VertRefresh of Monitor 2:"
+msgstr "VertRefresh (Monitor 2) einstellen:"
 
 #: modules/info.bm:3 modules/info.bm:19
 msgid "Infos"
@@ -307,15 +343,32 @@ msgstr "Nameserver konfigurieren"
 msgid "No supported network cards found."
 msgstr "Keine unterstützten Netzwerkkarten gefunden."
 
+#: modules/network.bm:470
+msgid "Please select network device"
+msgstr "Bitte Netzwerkgerät auswählen"
+
+#: modules/network.bm:478
+msgid "Please enter the IP address of your nameserver(s):"
+msgstr "Bitte IP-Adresse des Nameserver(s) eingeben:"
+
+#: modules/network.bm:501
+#, sh-format
+msgid "Configure network device $interface"
+msgstr "Netzwerkgerät $interface konfigurieren"
+
+#: modules/network.bm:501
+msgid "Restart this Interface"
+msgstr "Dieses Gerät neustarten"
+
 #: modules/network.bm:505
 msgid "Wireless settings"
 msgstr "WLAN Einstellungen "
 
-#: modules/network.bm:509
+#: modules/network.bm:509 modules/network.bm:523
 msgid "Static"
 msgstr "Statisch"
 
-#: modules/network.bm:513
+#: modules/network.bm:513 modules/network.bm:523
 msgid "DHCP"
 msgstr "DHCP"
 
@@ -323,13 +376,118 @@ msgstr "DHCP"
 msgid "(unconfigured)"
 msgstr "(unkonfiguriert)"
 
+#: modules/network.bm:523
+msgid "Interface configuration method"
+msgstr "Konfigurationsmethode"
+
+#: modules/network.bm:523
+msgid "(unconfigured interface)"
+msgstr "(unkonfiguriert)"
+
+#: modules/network.bm:547
+#, sh-format
+msgid "Please enter IP Address for $interface:"
+msgstr "Bitte IP-Adresse für $interface eingeben:"
+
 #: modules/network.bm:553 modules/network.bm:569 modules/network.bm:585
 #: modules/network.bm:601
 #, sh-format
 msgid "Invalid IP: $value"
 msgstr "Ungültige IP: $value"
 
-#: modules/network.bm:680
+#: modules/network.bm:563
+#, sh-format
+msgid "Please enter Network Mask for $interface:"
+msgstr "Bitte Netzwerkmaske für $interface eingeben:"
+
+#: modules/network.bm:579
+#, sh-format
+msgid "Please enter Broadcast Address for $interface:"
+msgstr "Bitte Broadcast-Adresse für $interface eingeben:"
+
+#: modules/network.bm:595
+#, sh-format
+msgid "Please enter Default Gateway for $interface:"
+msgstr "Bitte Standardgateway für $interface eingeben:"
+
+#: modules/network.bm:630
+#, sh-format
+msgid "Configure wireless settings for $IFACE"
+msgstr "WLAN Einstellungen für $IFACE"
+
+#: modules/network.bm:648
+msgid "Select Wireless-Mode"
+msgstr "WLAN-Modus auswählen:"
+
+#: modules/network.bm:648
+msgid "Managed"
+msgstr "Infrastruktur"
+
+#: modules/network.bm:648
+msgid "Ad-Hoc"
+msgstr "Ad-Hoc"
+
+#: modules/network.bm:648
+msgid "Master"
+msgstr "Master"
+
+#: modules/network.bm:648
+msgid "Repeater"
+msgstr "Repeater"
+
+#: modules/network.bm:648
+msgid "Secondary"
+msgstr "Secondary"
+
+#: modules/network.bm:648
+msgid "Monitor"
+msgstr "Monitor"
+
+#: modules/network.bm:648
+msgid "Auto"
+msgstr "Auto"
+
+#: modules/network.bm:655
+#, sh-format
+msgid "Please enter ESSID for $IFACE:"
+msgstr "Bitte die ESSID für $IFACE eingeben:"
+
+#: modules/network.bm:662
+msgid "What encryption do you want to use?"
+msgstr "Welche Verschlüsselung wollen Sie verwenden?"
+
+#: modules/network.bm:662
+msgid "no encryption, cleartext, not recommended"
+msgstr "keine Verschlüsselung, Klartext, nicht empfohlen"
+
+#: modules/network.bm:662
+msgid "WEP encryption"
+msgstr "WEP Verschlüsselung"
+
+#: modules/network.bm:662
+msgid "WPA-PSK (recommended)"
+msgstr "WPA-PSK (empfohlen)"
+
+#: modules/network.bm:667
+msgid ""
+"Where do you want to store the key?\\nNote: if you select <public> it will "
+"be readable by any account on your system."
+msgstr "Wo wollen Sie den WEP-Key speichern?\\nHinweis: wenn Sie <öffentlich> wählen wird er von jedem Benutzer auf dem System lesbar sein."
+
+#: modules/network.bm:667
+msgid "private (/etc/network/wep.*; chmod 700)"
+msgstr "privat (/etc/network/wep.*; chmod 700)"
+
+#: modules/network.bm:667
+msgid "public (/etc/network/interfaces)"
+msgstr "öffentlich (/etc/network/interfaces)"
+
+#: modules/network.bm:672
+#, sh-format
+msgid "Please enter your WEP-key in ASCII-mode for $IFACE:"
+msgstr "Bitte geben Sie Ihren WEP-Key für $IFACE im ASCII-Modus ein:sie "
+
+#: modules/network.bm:683
 msgid ""
 "Invalid WEP-Key length, only\\n 5 (64 bit),\\n 13 (128 bit),\\n 16 (152 bit) "
 "or\\n 29 (256 bit) \\ncharacters are allowed!"
@@ -337,11 +495,31 @@ msgstr ""
 "Ungültige WEP-Key Länge, nur\\n 5 (64 bit),\\n 13 (128 bit),\\n 16 (152 bit) "
 "oder\\n 29 (256 bit) \\nZeichen sind erlaubt!"
 
-#: modules/network.bm:715
+#: modules/network.bm:692
+#, sh-format
+msgid "Please enter your WPA-PSK for $IFACE:"
+msgstr "Bitte geben Sie Ihren WPA-PSK für $IFACE ein:"
+
+#: modules/network.bm:705
+#, sh-format
+msgid "Please enter NWID (cell identifier) for $IFACE:"
+msgstr "NWID (cell identifier) für $IFACE:"
+
+#: modules/network.bm:714
+#, sh-format
+msgid "Please enter channel for $IFACE (0-16, empty for auto):"
+msgstr "Bitte geben Sie den Kanal für $IFACE ein (0-16, leer für auto):"
+
+#: modules/network.bm:718
 msgid "Invalid channel, only integer values allowed!"
 msgstr "Ungültiger Kanal, nur Ganzzahlen sind erlaubt!"
 
-#: modules/network.bm:740
+#: modules/network.bm:734
+#, sh-format
+msgid "Please enter frequency for $IFACE (e.g 2.412G, empty for auto):"
+msgstr "Bitte geben Sie die Frequenz für $IFACE ein (z.B. 2.412G, leer für auto):"
+
+#: modules/network.bm:743
 msgid "Invalid format, e.g 2.412G is allowed!"
 msgstr "Ungültiges Format, z.B. 2.412G ist erlaubt!"
 

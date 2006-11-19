@@ -1,7 +1,12 @@
-knxcc (0.4.0-2.2) UNRELEASED; urgency=low
+knxcc (0.4.1-1) unstable; urgency=low
 
-  * NOT RELEASED YET
+  [ Stefan Lippers-Hollmann ]
   * bump standards version.
+  [ Andreas Loibl ]
+  * Updated Locales.
+  * Updates for knxcc_display:
+    - updated nvidia_remove and fglrx_remove functions.
+    - fixed insecure temp-file handling.
 
  -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 19 Nov 2006 01:40:31 +0100
 
